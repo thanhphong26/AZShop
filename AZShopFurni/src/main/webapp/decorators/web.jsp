@@ -108,7 +108,6 @@
 		src="<c:url value="/templates/web/vendor/jquery/jquery-3.6.4.min.js"/>"></script>
 	<script
 		src="<c:url value="/templates/web/vendor/sweetalert/sweetalert2@10.js"/>"></script>
-	<script>
 
 	<script
 		src="<c:url value="/templates/web/vendor/jquery/jquery-3.2.1.min.js"/>"></script>
