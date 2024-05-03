@@ -9,6 +9,13 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self';
+			script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net;
+			img-src 'self' https://drive.google.com https://storage.googleapis.com;
+			style-src 'self' https://cdnjs.cloudflare.com https://unpkg.com;
+			form-action 'self';" />  
+
 <!-- Style -->
 <!-- <link rel="icon" type="image/png" href="https://storage.googleapis.com/web-budget/Image/FE/website-logo.png">
  --><link rel="stylesheet" type="text/css"

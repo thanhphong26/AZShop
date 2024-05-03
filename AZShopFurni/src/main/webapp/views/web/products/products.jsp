@@ -9,6 +9,7 @@
 <head>
 <link href='<c:url value="/templates/web/css/product.css"/>'
 	rel="stylesheet" />
+	
 </head>
 
 <body>
