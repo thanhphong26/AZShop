@@ -17,7 +17,6 @@
 	</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Add this line in your head tag -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <!--===============================================================================================-->	
@@ -104,10 +103,11 @@
 	<%@ include file="/common/web/footer.jsp"%>
 
 	<!--===============================================================================================-->
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<!-- Include SweetAlert library from CDN -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+	<script
+		src="<c:url value="/templates/web/vendor/jquery/jquery-3.6.4.min.js"/>"></script>
+	<script
+		src="<c:url value="/templates/web/vendor/sweetalert/sweetalert2@10.js"/>"></script>
+	<script>
 
 	<script
 		src="<c:url value="/templates/web/vendor/jquery/jquery-3.2.1.min.js"/>"></script>
