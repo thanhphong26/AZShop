@@ -17,7 +17,8 @@
 	</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Security-Policy" content=" "/>
+	<meta http-equiv="Content-Security-Policy" content=" "/> 
+    <meta name="robots" content="NONE,NOARCHIVE">
     <!-- Add this line in your head tag -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <!--===============================================================================================-->	
