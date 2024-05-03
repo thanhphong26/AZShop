@@ -33,6 +33,7 @@ import com.azshop.service.impl.OrderServiceImpl;
 import com.azshop.service.impl.PaymentServiceImpl;
 import com.azshop.service.impl.ReportServiceImpl;
 import com.azshop.service.impl.UserServiceImpl;
+import com.azshop.utils.CsrfTokenManager;
 
 @WebServlet(urlPatterns = "/home")
 public class HomeController extends HttpServlet {
@@ -45,8 +46,17 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession(true);
+		HttpSession session = req.getSession();
 		
+		/*
+		 * if (session.getAttribute(CsrfTokenManager.CSRF_TOKEN_SESSION_ATTR_NAME) ==
+		 * null) { String csrfToken = CsrfTokenManager.generateAndSaveCsrfToken(req);
+		 * session.setAttribute("csrfToken", csrfToken); System.out.println("CSRF: " +
+		 * csrfToken); System.out.println("CSRF-Session: "+
+		 * session.getAttribute("csrfToken"));
+		 * 
+		 * }
+		 */
 		if (session.getAttribute("user") != null) {
 			UserModel user = (UserModel) session.getAttribute("user");
 			List<CartModel> listCart = cartService.findByCustomerId(user.getUserID());

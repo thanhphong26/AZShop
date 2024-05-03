@@ -1,3 +1,4 @@
+<%@page import="com.azshop.utils.CSRF"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -10,6 +11,7 @@
 </head>
 
 <body>
+
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-130">
 		<div class="container">
@@ -48,22 +50,21 @@
 				<!-- Search product -->
 				<form class="dis-none panel-search w-full p-t-10 p-b-15"
 					action="${pageContext.request.contextPath}/search" method="get">
-					<div class="dis-none panel-search w-full p-t-10 p-b-15">
-						<div class="bor8 dis-flex p-l-15">
-							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-							<datalist id="listHistory">
-								<c:forEach var="i" items="${history}">
-									<option value="${i.history}">
-								</c:forEach>
-							</datalist>
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
-								list="listHistory" name="keyword"
-								placeholder="<c:if test="{keyword==null}">Tìm kiếm</c:if>${keyword}">
-						</div>
+					<div class="bor8 dis-flex p-l-15">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
+							<i class="zmdi zmdi-search"></i>
+						</button>
+						<datalist id="listHistory">
+							<c:forEach var="i" items="${history}">
+								<option value="${i.history}">
+							</c:forEach>
+						</datalist>
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
+							list="listHistory" name="keyword"
+							placeholder="<c:if test="{keyword==null}">Tìm kiếm</c:if>${keyword}">
 					</div>
 				</form>
+
 				<!-- Filter -->
 				<div class="dis-none panel-filter w-full p-t-10">
 					<div
@@ -91,7 +92,8 @@
 							<div class="mtext-102 cl2 p-b-15">Khoảng giá</div>
 							<ul>
 								<li class="p-b-6"><button onclick=" changPrice('')"
-										class="filter-link stext-106 trans-04 ${price == '' ? 'filter-link-active' : ''}">Tất cả</button></li>
+										class="filter-link stext-106 trans-04 ${price == '' ? 'filter-link-active' : ''}">Tất
+										cả</button></li>
 								<li class="p-b-6"><button
 										onclick=" changPrice('0-1000000')"
 										class="filter-link stext-106 trans-04 ${price == '0-1000000' ? 'filter-link-active' : ''}">Dưới
@@ -272,17 +274,16 @@
 			page : "${page}",
 		};
 		function run() {
-			var url = "?"
-					+ Object.keys(params).map(
-							function(key) {
-								if (params[key] !== null
-										&& params[key] !== undefined
-										&& params[key] !== "") {
-									return encodeURIComponent(key) + '='
-											+ encodeURIComponent(params[key]);
-								}
-							}).filter(Boolean).join('&');
-
+			var urlParams = new URLSearchParams();
+			for ( var key in params) {
+				if (params.hasOwnProperty(key)) {
+					var value = params[key];
+					if (value !== null && value !== undefined && value !== "") {
+						urlParams.append(key, value);
+					}
+				}
+			}
+			var url = "?" + urlParams.toString();
 			window.location.href = url;
 		}
 

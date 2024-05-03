@@ -12,10 +12,16 @@ import java.util.stream.Collectors;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.owasp.csrfguard.CsrfGuard;
+import org.owasp.csrfguard.CsrfGuardException;
+import org.owasp.csrfguard.CsrfGuardFilter;
+import org.owasp.encoder.Encode;
 
 import com.azshop.dao.ICustomerDAO;
 import com.azshop.models.CartModel;
@@ -42,6 +48,7 @@ import com.azshop.service.impl.ProductServiceImpl;
 import com.azshop.service.impl.RatingServiceImpl;
 import com.azshop.service.impl.SearchHistoryServiceImpl;
 import com.azshop.service.impl.SupplierServiceImpl;
+import com.azshop.utils.CsrfTokenManager;
 
 @WebServlet(urlPatterns = { "/products", "/search" })
 public class ProductController extends HttpServlet {
@@ -63,10 +70,13 @@ public class ProductController extends HttpServlet {
 		resp.setContentType("text/htm");
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession();
 		showHistorySearch(req, resp);
 		String url = req.getRequestURI().toString();
+	    resp.setHeader("Content-Security-Policy", "default-src 'none'; script-src 'self'; img-src 'self' https://storage.googleapis.com; style-src 'self'; base-uri 'self'; form-action 'self'");
+		
 		if (url.contains("products")) {
-			HttpSession session = req.getSession(true);
+			
 			if (session.getAttribute("user") != null) {
 				UserModel user = (UserModel) session.getAttribute("user");
 				List<CartModel> listCart = cartService.findByCustomerId(user.getUserID());
@@ -143,9 +153,22 @@ public class ProductController extends HttpServlet {
 
 			rd.forward(req, resp);
 		} else if (url.contains("/search")) {
+			String csrfToken = (String)session.getAttribute("csrfToken");
+			System.out.println("Cookie: "+ csrfToken);
+			// get the CSRF form field
+			String csrfField = req.getParameter("csrfToken");
+			System.out.println("Test: "+ csrfField);
+			// validate CSRF
+			if (csrfField == null || csrfToken == null || !csrfToken.equals(csrfField)) {
+				try {
+					resp.sendError(401);
+				} catch (IOException e) {
+					// ...
+				}
+				return;
+			}
 			List<ProductModel> listProduct = new ArrayList<ProductModel>();
 			String keyword = req.getParameter("keyword");
-			HttpSession session = req.getSession();
 			if (keyword != null) {
 				if (session != null && session.getAttribute("user") != null) {
 					UserModel user = (UserModel) session.getAttribute("user");
@@ -163,7 +186,7 @@ public class ProductController extends HttpServlet {
 			String sortProduct = req.getParameter("sort");
 			listProduct = filterAndSortProduct(listProduct, filterPrice, filterRating, sortProduct);
 
-			req.setAttribute("keyword", keyword);
+            req.setAttribute("keyword", Encode.forHtmlAttribute(keyword));
 			req.setAttribute("price", filterPrice);
 			req.setAttribute("sort", sortProduct);
 			req.setAttribute("rating", filterRating);
@@ -222,6 +245,6 @@ public class ProductController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 	}
+
 }

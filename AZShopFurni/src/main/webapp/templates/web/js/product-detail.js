@@ -25,11 +25,13 @@ function addToCart() {
 	var selectedItemID = $("#selectedItemID").val();
 	var selectedQuantity = $("#selectedQuantity").val();
 	var errorContainer = $("#errorContainer");
+	var csrfToken = $("#csrfToken").val();
 
 	if (selectedItemID && selectedQuantity > 0) {
 		var data = {
 			selectedItemID: selectedItemID,
-			selectedQuantity: selectedQuantity
+			selectedQuantity: selectedQuantity,
+			csrfToken: csrfToken
 		};
 
 		$.ajax({

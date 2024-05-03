@@ -16,7 +16,7 @@
 			<nav class="limiter-menu-desktop container">
 
 				<!-- Logo desktop -->
-				<a href="<c:url value='/home'/>" class="logo"> <img src="https://drive.google.com/file/d/1DPn4srTQ9dgsTd5xH2h_5KlgLAZ8qxkT/view?usp=sharing"
+				<a href="<c:url value='/home'/>" class="logo"> <img src="https://storage.googleapis.com/web-budget1/Image/logo.png"
 					alt="IMG-LOGO">
 				</a>
 
@@ -116,7 +116,7 @@
 	</div>
 
 	<!-- Modal Search -->
-	<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+	<!-- <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
 		<div class="container-search-header">
 			<button
 				class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
@@ -131,7 +131,7 @@
 					placeholder="Search...">
 			</form>
 		</div>
-	</div>
+	</div> -->
 </header>
 
 <!-- Cart -->

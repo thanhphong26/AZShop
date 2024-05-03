@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import com.azshop.models.UserModel;
 import com.azshop.service.IAccountService;
 import com.azshop.service.ICustomerService;
@@ -26,19 +28,25 @@ public class LoginController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String url = req.getRequestURI().toString();
-		if (url.contains("login"))
+		String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
+
+		String hash = req.getQueryString();
+		if (hash != null && hash.startsWith("#")) {
+			hash = hash.substring(1);
+			hash = hash.replaceAll("[^a-zA-Z0-9]", "");
+		}
+		if (requestedUrl.contains("login"))
 			showPageLogin(req, resp);
-		else if (url.contains("waiting"))
+		else if (requestedUrl.contains("waiting"))
 			waiting(req, resp);
-		else if (url.contains("logout"))
+		else if (requestedUrl.contains("logout"))
 			logout(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String url = req.getRequestURI().toString();
-		if (url.contains("login"))
+	    String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
+		if (requestedUrl.contains("login"))
 			checkLogin(req, resp);
 	}
 
@@ -68,8 +76,8 @@ public class LoginController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		String username = Encode.forHtmlAttribute(req.getParameter("username"));
+	    String password = Encode.forHtmlAttribute(req.getParameter("password"));
 
 
 		UserModel user = accService.login(username, password);

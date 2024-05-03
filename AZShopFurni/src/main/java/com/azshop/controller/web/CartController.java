@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -110,6 +111,7 @@ public class CartController extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
+        System.out.println("Cookie1: "+req.getParameter("csrfToken"));
 
 		String url = req.getRequestURI().toString();
 		if (url.contains("addToCart")) {
@@ -118,6 +120,7 @@ public class CartController extends HttpServlet {
 	}
 
 	private void addToCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		 
 		HttpSession session = req.getSession(true);
 		if (session == null || session.getAttribute("user") == null) {
 			resp.setContentType("application/json");
@@ -131,7 +134,7 @@ public class CartController extends HttpServlet {
 		int customerID = user.getUserID();
 		int itemID = Integer.parseInt(req.getParameter("selectedItemID"));
 		int quantity = Integer.parseInt(req.getParameter("selectedQuantity"));
-
+		
 		cart.setCustomerID(customerID);
 		cart.setItemID(itemID);
 		oldCart = cartService.findOne(customerID, itemID);
@@ -139,6 +142,7 @@ public class CartController extends HttpServlet {
 		cart.setQuantity(quantity);
 		ItemModel item = new ItemModel();
 		item = itemService.findOne(itemID);
+		
 		if (item.getStock() >= quantity) {
 			if (oldCart.getQuantity() != 0) {
 				cartService.update(cart);
@@ -151,4 +155,5 @@ public class CartController extends HttpServlet {
 			resp.getWriter().write("{\"error\":\"Số lượng không đủ!\"}");
 		}
 	}
+
 }

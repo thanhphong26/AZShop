@@ -26,6 +26,7 @@
 				ĐĂNG NHẬP
 				</h1>
 					<h4>${mess}</h4>
+					<input type="hidden" name="csrfToken" id="csrfToken" value="${csrfToken}" />
 					<div class="input-box">
 						<input type="text" placeholder="Tên đăng nhập" value="${username}"
 							name="username" required> <i class='bx bxs-user'></i>
