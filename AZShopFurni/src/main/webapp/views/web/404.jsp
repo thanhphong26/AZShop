@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content=" "> 
 <title>404 Not Found</title>
 <style>
   body {

@@ -17,6 +17,7 @@
 	</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Security-Policy" content=" "/>
     <!-- Add this line in your head tag -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <!--===============================================================================================-->	
@@ -66,7 +67,7 @@
 <!--===============================================================================================-->
 <link
 	href='<c:url value="/templates/web/css/products/tiny-slider.css"/>'
-	rel="stylesheet" />
+	rel="stylesheet" /> 
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 	rel="stylesheet">
@@ -154,7 +155,7 @@
 	<!--===============================================================================================-->
 	<script src="<c:url value="/templates/web/js/main.js"/>"></script>
 	<script src="<c:url value="/templates/web/js/product-detail.js"/>"></script>
-	<script src="<c:url value="/templates/web/js/tiny-slider.js"/>"></script>
+	<%-- <script src="<c:url value="/templates/web/js/tiny-slider.js"/>"></script> --%>
 
 	<!--===============================================================================================-->
 	<script
@@ -174,7 +175,7 @@
 	<script src="<c:url value="/templates/web/vendor/slick/slick.min.js"/>"></script>
 	<script src="<c:url value="/templates/web/js/slick-custom.js"/>"></script>
 	<!--===============================================================================================-->
-	<script src="<c:url value="vendor/parallax100/parallax100.js"/>"></script>
+	<%-- <script src="<c:url value="vendor/parallax100/parallax100.js"/>"></script> --%>
 	<script>
 		$('.parallax100').parallax100();
 	</script>
