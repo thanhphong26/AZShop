@@ -37,6 +37,7 @@ public class SignupController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
 		String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
 
 		String hash = req.getQueryString();
@@ -56,6 +57,7 @@ public class SignupController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
 		String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
 		if (requestedUrl.contains("signup"))
 			checkInfoSignup(req, resp);

@@ -31,6 +31,7 @@ public class ForgetPassController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
 		String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
 
 		String hash = req.getQueryString();
@@ -46,6 +47,7 @@ public class ForgetPassController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
 	    String csrfToken = req.getParameter("csrf_token");
 	    if (!csrfToken.equals(req.getSession().getId())) {
 	        // Xử lý lỗi CSRF token không hợp lệ
