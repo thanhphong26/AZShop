@@ -111,10 +111,14 @@ public class CartController extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
-        System.out.println("Cookie1: "+req.getParameter("csrfToken"));
 
 		String url = req.getRequestURI().toString();
 		if (url.contains("addToCart")) {
+			if(!doAction(req, resp)) {
+				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+				rDispatcher. forward(req, resp);
+				return;
+			}
 			addToCart(req, resp);
 		}
 	}
@@ -155,5 +159,20 @@ public class CartController extends HttpServlet {
 			resp.getWriter().write("{\"error\":\"Số lượng không đủ!\"}");
 		}
 	}
+	public boolean doAction(HttpServletRequest request, HttpServletResponse response) {
+		String csrfCookie = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("csrf")) {
+				csrfCookie = cookie.getValue();
+			}
+		}
 
+		String csrfField = request.getParameter("csrfToken");
+
+		// validate CSRF
+		if (csrfCookie == null || csrfField == null || !csrfCookie.equals(csrfField)) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
+<%@page import="com.azshop.utils.CSRF" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,8 +49,15 @@
 					</div>
 				</div>
 				<!-- Search product -->
+				<%
+				String csrfToken = CSRF.getToken();
+
+				javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
+				response.addCookie(cookie);
+				%>
 				<form class="dis-none panel-search w-full p-t-10 p-b-15"
 					action="${pageContext.request.contextPath}/search" method="get">
+					  <input type="hidden" name="csrfToken" value="<%= csrfToken %>"/>
 					<div class="bor8 dis-flex p-l-15">
 						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
 							<i class="zmdi zmdi-search"></i>
@@ -271,7 +279,7 @@
 			sort : "${sort}",
 			price : "${price}",
 			rating : "${rating}",
-			page : "${page}",
+			page : "${page}"
 		};
 		function run() {
 			var urlParams = new URLSearchParams();
@@ -289,23 +297,23 @@
 
 		function changPrice(price) {
 			params["price"] = price;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 
 		function changSort(sort) {
 			params["sort"] = sort;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 		function changeRating(rating) {
 			params["rating"] = rating;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 
 		function changePage(page) {
-			params["page"] = page
+			params["page"] = page;
 			run(0);
 		}
 	</script>

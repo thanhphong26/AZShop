@@ -71,9 +71,10 @@ public class ProductController extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
+		
 		showHistorySearch(req, resp);
 		String url = req.getRequestURI().toString();
-	    resp.setHeader("Content-Security-Policy", "default-src 'none'; script-src 'self'; img-src 'self' https://storage.googleapis.com; style-src 'self'; base-uri 'self'; form-action 'self'");
+	    //resp.setHeader("Content-Security-Policy", "default-src 'none'; script-src 'self'; img-src 'self' https://storage.googleapis.com; style-src 'self'; base-uri 'self'; form-action 'self'");
 		
 		if (url.contains("products")) {
 			
@@ -89,7 +90,6 @@ public class ProductController extends HttpServlet {
 				getServletContext().setAttribute("carts", listCart);
 				getServletContext().setAttribute("subTotal", subTotal);
 			}
-
 			String idString = req.getParameter("id");
 			if (idString != null) {
 				int id = Integer.parseInt(req.getParameter("id"));
@@ -153,18 +153,9 @@ public class ProductController extends HttpServlet {
 
 			rd.forward(req, resp);
 		} else if (url.contains("/search")) {
-			String csrfToken = (String)session.getAttribute("csrfToken");
-			System.out.println("Cookie: "+ csrfToken);
-			// get the CSRF form field
-			String csrfField = req.getParameter("csrfToken");
-			System.out.println("Test: "+ csrfField);
-			// validate CSRF
-			if (csrfField == null || csrfToken == null || !csrfToken.equals(csrfField)) {
-				try {
-					resp.sendError(401);
-				} catch (IOException e) {
-					// ...
-				}
+			if(!doAction(req, resp)) {
+				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+				rDispatcher. forward(req, resp);
 				return;
 			}
 			List<ProductModel> listProduct = new ArrayList<ProductModel>();
@@ -246,5 +237,21 @@ public class ProductController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
+	public boolean doAction(HttpServletRequest request, HttpServletResponse response) {
+		// get the CSRF cookie
+		String csrfCookie = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("csrf")) {
+				csrfCookie = cookie.getValue();
+			}
+		}
 
+		String csrfField = request.getParameter("csrfToken");
+
+		// validate CSRF
+		if (csrfCookie == null || csrfField == null || !csrfCookie.equals(csrfField)) {
+			return false;
+		}
+		return true;
+	}
 }

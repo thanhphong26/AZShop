@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
+<%@page import="com.azshop.utils.CSRF" %>
 <header>
 	<div class="container pt-5">
 		<nav class="d-flex">
@@ -132,9 +133,16 @@
 							<i class="fas fa-plus"></i>
 						</button>
 					</div>
+					<%
+					String csrfToken = CSRF.getToken();
+
+					javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
+					response.addCookie(cookie);
+					%>
 					<div class="mt-5 row">
 						<dd class="col-5">
 							<form id="addToCartForm" action="#" method="post">
+								<input type="hidden" name="csrfToken" id ="csrfToken" value="<%= csrfToken %>"/>
 								<div>
 									<input type="hidden" name="selectedItemID" id="selectedItemID"
 										value=""> <input type="hidden" name="selectedQuantity"
