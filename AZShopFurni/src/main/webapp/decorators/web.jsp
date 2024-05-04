@@ -4,25 +4,32 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title><c:if test="${fn:contains(pageContext.request.requestURI, 'home')}">Trang chủ</c:if>
+<title><c:if
+		test="${fn:contains(pageContext.request.requestURI, 'home')}">Trang chủ</c:if>
 	<c:if test="${fn:contains(pageContext.request.requestURI, 'products')}">Sản phẩm</c:if>
 	<c:if test="${fn:contains(pageContext.request.requestURI, 'infoUser')}">Tài khoản</c:if>
-	<c:if test="${fn:contains(pageContext.request.requestURI, 'listVoucher')}">Kho voucher</c:if>
+	<c:if
+		test="${fn:contains(pageContext.request.requestURI, 'listVoucher')}">Kho voucher</c:if>
 	<c:if test="${fn:contains(pageContext.request.requestURI, 'Order')}">Đơn hàng</c:if>
 	<c:if test="${fn:contains(pageContext.request.requestURI, 'carts')}">Giỏ hàng</c:if>
 	<c:if test="${fn:contains(pageContext.request.requestURI, 'checkout')}">Thanh toán</c:if>
-	<c:if test="${fn:contains(pageContext.request.requestURI, 'introduction')}">Giới thiệu</c:if>
-	<c:if test="${fn:contains(pageContext.request.requestURI, 'updateUser')}">Chỉnh sửa thông tin</c:if>
-	<c:if test="${fn:contains(pageContext.request.requestURI, 'updateAccount')}">Thay đổi mật khẩu</c:if>
-	</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Security-Policy" content=" "/> 
-    <meta name="robots" content="NONE,NOARCHIVE">
-    <!-- Add this line in your head tag -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="https://drive.google.com/file/d/1DPn4srTQ9dgsTd5xH2h_5KlgLAZ8qxkT/view?usp=sharing">
+	<c:if
+		test="${fn:contains(pageContext.request.requestURI, 'introduction')}">Giới thiệu</c:if>
+	<c:if
+		test="${fn:contains(pageContext.request.requestURI, 'updateUser')}">Chỉnh sửa thông tin</c:if>
+	<c:if
+		test="${fn:contains(pageContext.request.requestURI, 'updateAccount')}">Thay đổi mật khẩu</c:if>
+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content=" " />
+<meta name="robots" content="NONE,NOARCHIVE">
+<!-- Add this line in your head tag -->
+<link rel="stylesheet"
+	href="<c:url value="/templates/web/css/detail/all5153.min.css"/>">
+<!--===============================================================================================-->
+<link rel="icon" type="image/png"
+	href="https://drive.google.com/file/d/1DPn4srTQ9dgsTd5xH2h_5KlgLAZ8qxkT/view?usp=sharing">
 
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/templates/web/vendor/bootstrap/css/bootstrap.min.css"/>">
@@ -68,9 +75,8 @@
 <!--===============================================================================================-->
 <link
 	href='<c:url value="/templates/web/css/products/tiny-slider.css"/>'
-	rel="stylesheet" /> 
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+	rel="stylesheet" />
+<link href="<c:url value="/templates/web/css/detail/all600.min.css"/>"
 	rel="stylesheet">
 <link
 	href='<c:url value="/templates/web/css/products/product-detail.css"/>'
@@ -78,12 +84,13 @@
 
 <link href='<c:url value="/templates/web/css/carts/carts.css"/>'
 	rel="stylesheet" />
-	
+
 <link href='<c:url value="/templates/web/css/checkout/checkout.css"/>'
 	rel="stylesheet" />
-	
+
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" />
+	href="<c:url value="/templates/web/css/detail/materialdesignicons5345.css"/>" />
+
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
 	rel="stylesheet">
 
@@ -91,7 +98,7 @@
 	rel="stylesheet" />
 
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" />
+	href="<c:url value="/templates/web/css/detail/materialdesignicons5345.css"/>" />
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
 	rel="stylesheet">
 
@@ -101,7 +108,7 @@
 	<div class="m-t-84">
 		<decorator:body></decorator:body>
 	</div>
-	
+
 	<%@ include file="/common/web/footer.jsp"%>
 
 	<!--===============================================================================================-->
@@ -209,12 +216,16 @@
 				function() {
 					var nameProduct = $(this).parent().parent().find(
 							'.js-name-b2').html();
-					$(this).on('click', function() {
-						swal(nameProduct, "được thêm vào danh sách yêu thích !", "success");
+					$(this).on(
+							'click',
+							function() {
+								swal(nameProduct,
+										"được thêm vào danh sách yêu thích !",
+										"success");
 
-						$(this).addClass('js-addedwish-b2');
-						$(this).off('click');
-					});
+								$(this).addClass('js-addedwish-b2');
+								$(this).off('click');
+							});
 				});
 
 		$('.js-addwish-detail').each(
@@ -222,12 +233,16 @@
 					var nameProduct = $(this).parent().parent().parent().find(
 							'.js-name-detail').html();
 
-					$(this).on('click', function() {
-						swal(nameProduct, "được thêm vào danh sách yêu thích !", "success");
+					$(this).on(
+							'click',
+							function() {
+								swal(nameProduct,
+										"được thêm vào danh sách yêu thích !",
+										"success");
 
-						$(this).addClass('js-addedwish-detail');
-						$(this).off('click');
-					});
+								$(this).addClass('js-addedwish-detail');
+								$(this).off('click');
+							});
 				});
 
 		/*---------------------------------------------*/
