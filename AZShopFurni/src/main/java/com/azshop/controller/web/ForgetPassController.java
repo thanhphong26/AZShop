@@ -173,7 +173,6 @@ import other.SendMail;
 public class ForgetPassController extends HttpServlet {
     public static final String DOMAIN = "http://cavoibeoo.us.to";
     private static final long serialVersionUID = 1L;
-    private static final String CSRF_TOKEN_NAME = "csrf_token";
     private IAccountService accService = new AccountServiceImpl();
     private ICustomerService cusService = new CustomerServiceImpl();
 
@@ -187,8 +186,14 @@ public class ForgetPassController extends HttpServlet {
             hash = hash.substring(1); // Loại bỏ ký tự '#'
             hash = Encode.forUriComponent(hash); // Mã hóa chuỗi hash
         }
-        if (requestedUrl.contains("forgetpass"))
+        if (requestedUrl.contains("forgetpass")) {
+        	if(!doAction(req, resp)) {
+				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+				rDispatcher. forward(req, resp);
+				return;
+			}
             showPageForget(req, resp);
+        }
         else if (requestedUrl.contains("changepass"))
             showPageChangePass(req, resp);
     }
@@ -196,19 +201,16 @@ public class ForgetPassController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-        String csrfToken = req.getParameter(CSRF_TOKEN_NAME);
-        HttpSession session = req.getSession();
-        String sessionToken = (String) session.getAttribute(CSRF_TOKEN_NAME);
-
-        // Kiểm tra CSRF token
-        if (csrfToken == null || !csrfToken.equals(sessionToken)) {
-            resp.sendRedirect(req.getContextPath() + "/404.jsp");
-            return;
-        }
 
         String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
-        if (requestedUrl.contains("forgetpass"))
+        if (requestedUrl.contains("forgetpass")) {
+        	if(!doAction(req, resp)) {
+				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+				rDispatcher. forward(req, resp);
+				return;
+			}
             checkEmailForget(req, resp);
+        }
         else if (requestedUrl.contains("changepass"))
             changePassCus(req, resp);
     }
@@ -290,5 +292,20 @@ public class ForgetPassController extends HttpServlet {
         vercookie.setMaxAge(15 * 60);
         resp.addCookie(vercookie);
     }
+    public boolean doAction(HttpServletRequest request, HttpServletResponse response) {
+		String csrfCookie = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("csrf")) {
+				csrfCookie = cookie.getValue();
+			}
+		}
+
+		String csrfField = request.getParameter("csrfToken");
+		// validate CSRF
+		if (csrfCookie == null || csrfField == null || !csrfCookie.equals(csrfField)) {
+			return false;
+		}
+		return true;
+	}
 }
 

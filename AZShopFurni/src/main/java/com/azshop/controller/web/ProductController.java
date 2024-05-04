@@ -54,7 +54,7 @@ import com.azshop.utils.CsrfTokenManager;
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
+	private static final int MAX_LENGTH=100;
 	IProductService productService = new ProductServiceImpl();
 	ICustomerService customerService = new CustomerServiceImpl();
 	ICategoryService categoryService = new CategoryServiceImpl();
@@ -93,6 +93,11 @@ public class ProductController extends HttpServlet {
 			}
 			String idString = req.getParameter("id");
 			if (idString != null) {
+				 if (!isValidIdString(idString)) {
+					 RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+						rDispatcher. forward(req, resp);
+						return;
+                 }
 				int id = Integer.parseInt(req.getParameter("id"));
 				ProductModel productModel = productService.findOne(id);
 
@@ -109,6 +114,7 @@ public class ProductController extends HttpServlet {
 
 				rd = req.getRequestDispatcher("/views/web/products/productdetail.jsp");
 			} else {
+				
 				String cateIdString = req.getParameter("cateId");
 				String pageString = req.getParameter("page");
 				int page = pageString != null ? Integer.parseInt(pageString) : 1;
@@ -117,6 +123,16 @@ public class ProductController extends HttpServlet {
 				List<CategoryModel> listRootCategory = categoryService.getRootCategories();
 
 				if (cateIdString != null) {
+					 if (!isValidIdString(cateIdString)) {
+						 RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+							rDispatcher. forward(req, resp);
+							return;
+	                 }
+					 if (!isValidIdString(pageString)) {
+						 RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+							rDispatcher. forward(req, resp);
+							return;
+	                 }
 					int cateId = Integer.parseInt(cateIdString);
 					List<CategoryModel> listCateChild = categoryService.geChidlCategories(cateId);
 					CategoryModel categoryModel = categoryService.findOne(cateId);
@@ -254,5 +270,14 @@ public class ProductController extends HttpServlet {
 			return false;
 		}
 		return true;
+	}
+	private boolean isValidIdString(String idString) {
+	    if (idString == null || idString.isEmpty()) {
+	        return false;
+	    }
+	    
+	    String sanitizedIdString = Encode.forXml(idString);
+	    
+	    return sanitizedIdString.equals(idString) && idString.length() <= MAX_LENGTH;
 	}
 }

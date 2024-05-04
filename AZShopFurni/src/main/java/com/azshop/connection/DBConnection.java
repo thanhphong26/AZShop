@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class DBConnection {
 	private static String DB_URL = "jdbc:mysql://localhost:3306/azshop";
 	private static String USER_NAME = "root";
-	private static String PASSWORD = "123456";
+	private static String PASSWORD = "15242635";
 
 	private static Connection con;
 	
