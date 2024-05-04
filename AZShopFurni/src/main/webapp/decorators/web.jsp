@@ -111,7 +111,7 @@
 		src="<c:url value="/templates/web/vendor/sweetalert/sweetalert2@10.js"/>"></script>
 
 	<script
-		src="<c:url value="/templates/web/vendor/jquery/jquery-3.2.1.min.js"/>"></script>
+		src="<c:url value="/templates/web/vendor/jquery/jquery-3.7.1.min.js"/>"></script>
 	<!--===============================================================================================-->
 	<script
 		src="<c:url value="/templates/web/vendor/animsition/js/animsition.min.js"/>"></script>
@@ -159,7 +159,7 @@
 
 	<!--===============================================================================================-->
 	<script
-		src="<c:url value="/templates/web/vendor/jquery/jquery-3.2.1.min.js"/>"></script>
+		src="<c:url value="/templates/web/vendor/jquery/jquery-3.7.1.min.js"/>"></script>
 	<!--===============================================================================================-->
 	<script
 		src="<c:url value="/templates/web/vendor/bootstrap/js/popper.js"/>"></script>
