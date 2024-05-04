@@ -19,8 +19,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Security-Policy" content=" "/> 
     <meta name="robots" content="NONE,NOARCHIVE">
-    <!-- Add this line in your head tag -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="https://drive.google.com/file/d/1DPn4srTQ9dgsTd5xH2h_5KlgLAZ8qxkT/view?usp=sharing">
 
@@ -61,7 +60,7 @@
 	href="<c:url value="/templates/web/vendor/daterangepicker/daterangepicker.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/templates/web/vendor/slick/slick.css"/>">
+	href="<c:url value="/templates/web/vendor/slick/slick.css"/>"/>
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/templates/web/vendor/MagnificPopup/magnific-popup.css"/>">
@@ -69,9 +68,12 @@
 <link
 	href='<c:url value="/templates/web/css/products/tiny-slider.css"/>'
 	rel="stylesheet" /> 
-<link
+<%--<link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-	rel="stylesheet">
+	rel="stylesheet">  
+<link rel="stylesheet"
+    href="/templates/web/css/infor/all.min.css"/>  
+ --%>
 <link
 	href='<c:url value="/templates/web/css/products/product-detail.css"/>'
 	rel="stylesheet" />
@@ -83,17 +85,16 @@
 	rel="stylesheet" />
 	
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" />
-<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-	rel="stylesheet">
-
-<link href='<c:url value="/templates/web/css/checkout/checkout.css"/>'
-	rel="stylesheet" />
-
+	href="<c:url value="/templates/web/css/infor/materialdesignicons.css"/>">
+<%--  href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" 
+<link
+	rel="stylesheet"
+	href="<c:url value="/templates/web/css/infor/boxicons.min.css"/>">
+ --%>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" />
-<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-	rel="stylesheet">
+	href="<c:url value="/templates/web/css/infor/materialdesignicons.css"/>">
+
+
 
 </head>
 <body>

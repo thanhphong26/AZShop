@@ -7,9 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href='<c:url value="/templates/web/css/product.css"/>'
-	rel="stylesheet" />
-	
+<link href='<c:url value="/templates/web/css/products/product.css"/>'
+	rel="stylesheet" /> 	
 </head>
 
 <body>

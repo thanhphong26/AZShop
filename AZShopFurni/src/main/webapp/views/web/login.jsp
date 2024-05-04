@@ -15,8 +15,9 @@
 <!-- <link rel="icon" type="image/png" href="https://storage.googleapis.com/web-budget/Image/FE/website-logo.png">
  --><link rel="stylesheet" type="text/css"
 	href="<c:url value="/templates/web/css/login.css"/>">
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
-	rel='stylesheet'>
+<%-- <link type="text/css"
+href="<c:url value="/templates/web/css/infor/boxicons.min.css"/>"
+	rel='stylesheet'/> --%>
 
 <title>Đăng nhập</title>
 </head>
