@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,11 +114,17 @@ public class CartController extends HttpServlet {
 
 		String url = req.getRequestURI().toString();
 		if (url.contains("addToCart")) {
+			if(!doAction(req, resp)) {
+				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+				rDispatcher. forward(req, resp);
+				return;
+			}
 			addToCart(req, resp);
 		}
 	}
 
 	private void addToCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		 
 		HttpSession session = req.getSession(true);
 		if (session == null || session.getAttribute("user") == null) {
 			resp.setContentType("application/json");
@@ -131,7 +138,7 @@ public class CartController extends HttpServlet {
 		int customerID = user.getUserID();
 		int itemID = Integer.parseInt(req.getParameter("selectedItemID"));
 		int quantity = Integer.parseInt(req.getParameter("selectedQuantity"));
-
+		
 		cart.setCustomerID(customerID);
 		cart.setItemID(itemID);
 		oldCart = cartService.findOne(customerID, itemID);
@@ -139,6 +146,7 @@ public class CartController extends HttpServlet {
 		cart.setQuantity(quantity);
 		ItemModel item = new ItemModel();
 		item = itemService.findOne(itemID);
+		
 		if (item.getStock() >= quantity) {
 			if (oldCart.getQuantity() != 0) {
 				cartService.update(cart);
@@ -150,5 +158,21 @@ public class CartController extends HttpServlet {
 			resp.setContentType("application/json");
 			resp.getWriter().write("{\"error\":\"Số lượng không đủ!\"}");
 		}
+	}
+	public boolean doAction(HttpServletRequest request, HttpServletResponse response) {
+		String csrfCookie = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("csrf")) {
+				csrfCookie = cookie.getValue();
+			}
+		}
+
+		String csrfField = request.getParameter("csrfToken");
+
+		// validate CSRF
+		if (csrfCookie == null || csrfField == null || !csrfCookie.equals(csrfField)) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -17,6 +17,8 @@
 	</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Security-Policy" content=" "/> 
+    <meta name="robots" content="NONE,NOARCHIVE">
     <!-- Add this line in your head tag -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <!--===============================================================================================-->	
@@ -66,7 +68,7 @@
 <!--===============================================================================================-->
 <link
 	href='<c:url value="/templates/web/css/products/tiny-slider.css"/>'
-	rel="stylesheet" />
+	rel="stylesheet" /> 
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 	rel="stylesheet">
@@ -103,10 +105,10 @@
 	<%@ include file="/common/web/footer.jsp"%>
 
 	<!--===============================================================================================-->
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<!-- Include SweetAlert library from CDN -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+	<script
+		src="<c:url value="/templates/web/vendor/jquery/jquery-3.6.4.min.js"/>"></script>
+	<script
+		src="<c:url value="/templates/web/vendor/sweetalert/sweetalert2@10.js"/>"></script>
 
 	<script
 		src="<c:url value="/templates/web/vendor/jquery/jquery-3.2.1.min.js"/>"></script>
@@ -153,7 +155,7 @@
 	<!--===============================================================================================-->
 	<script src="<c:url value="/templates/web/js/main.js"/>"></script>
 	<script src="<c:url value="/templates/web/js/product-detail.js"/>"></script>
-	<script src="<c:url value="/templates/web/js/tiny-slider.js"/>"></script>
+	<%-- <script src="<c:url value="/templates/web/js/tiny-slider.js"/>"></script> --%>
 
 	<!--===============================================================================================-->
 	<script
@@ -173,7 +175,7 @@
 	<script src="<c:url value="/templates/web/vendor/slick/slick.min.js"/>"></script>
 	<script src="<c:url value="/templates/web/js/slick-custom.js"/>"></script>
 	<!--===============================================================================================-->
-	<script src="<c:url value="vendor/parallax100/parallax100.js"/>"></script>
+	<%-- <script src="<c:url value="vendor/parallax100/parallax100.js"/>"></script> --%>
 	<script>
 		$('.parallax100').parallax100();
 	</script>

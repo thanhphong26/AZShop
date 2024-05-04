@@ -1,15 +1,19 @@
+<%@page import="com.azshop.utils.CSRF"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
+<%@page import="com.azshop.utils.CSRF" %>
 <!DOCTYPE html>
 <html>
 <head>
 <link href='<c:url value="/templates/web/css/product.css"/>'
 	rel="stylesheet" />
+	
 </head>
 
 <body>
+
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-130">
 		<div class="container">
@@ -46,24 +50,32 @@
 					</div>
 				</div>
 				<!-- Search product -->
+				<%
+				String csrfToken = CSRF.getToken();
+
+				javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
+				cookie.setSecure(true); 
+				cookie.setHttpOnly(true); 
+				response.addCookie(cookie);
+				%>
 				<form class="dis-none panel-search w-full p-t-10 p-b-15"
 					action="${pageContext.request.contextPath}/search" method="get">
-					<div class="dis-none panel-search w-full p-t-10 p-b-15">
-						<div class="bor8 dis-flex p-l-15">
-							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-							<datalist id="listHistory">
-								<c:forEach var="i" items="${history}">
-									<option value="${i.history}">
-								</c:forEach>
-							</datalist>
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
-								list="listHistory" name="keyword"
-								placeholder="<c:if test="{keyword==null}">Tìm kiếm</c:if>${keyword}">
-						</div>
+					  <input type="hidden" name="csrfToken" value="<%= csrfToken %>"/>
+					<div class="bor8 dis-flex p-l-15">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
+							<i class="zmdi zmdi-search"></i>
+						</button>
+						<datalist id="listHistory">
+							<c:forEach var="i" items="${history}">
+								<option value="${i.history}">
+							</c:forEach>
+						</datalist>
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
+							list="listHistory" name="keyword"
+							placeholder="<c:if test="{keyword==null}">Tìm kiếm</c:if>${keyword}">
 					</div>
 				</form>
+
 				<!-- Filter -->
 				<div class="dis-none panel-filter w-full p-t-10">
 					<div
@@ -91,7 +103,8 @@
 							<div class="mtext-102 cl2 p-b-15">Khoảng giá</div>
 							<ul>
 								<li class="p-b-6"><button onclick=" changPrice('')"
-										class="filter-link stext-106 trans-04 ${price == '' ? 'filter-link-active' : ''}">Tất cả</button></li>
+										class="filter-link stext-106 trans-04 ${price == '' ? 'filter-link-active' : ''}">Tất
+										cả</button></li>
 								<li class="p-b-6"><button
 										onclick=" changPrice('0-1000000')"
 										class="filter-link stext-106 trans-04 ${price == '0-1000000' ? 'filter-link-active' : ''}">Dưới
@@ -269,42 +282,41 @@
 			sort : "${sort}",
 			price : "${price}",
 			rating : "${rating}",
-			page : "${page}",
+			page : "${page}"
 		};
 		function run() {
-			var url = "?"
-					+ Object.keys(params).map(
-							function(key) {
-								if (params[key] !== null
-										&& params[key] !== undefined
-										&& params[key] !== "") {
-									return encodeURIComponent(key) + '='
-											+ encodeURIComponent(params[key]);
-								}
-							}).filter(Boolean).join('&');
-
+			var urlParams = new URLSearchParams();
+			for ( var key in params) {
+				if (params.hasOwnProperty(key)) {
+					var value = params[key];
+					if (value !== null && value !== undefined && value !== "") {
+						urlParams.append(key, value);
+					}
+				}
+			}
+			var url = "?" + urlParams.toString();
 			window.location.href = url;
 		}
 
 		function changPrice(price) {
 			params["price"] = price;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 
 		function changSort(sort) {
 			params["sort"] = sort;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 		function changeRating(rating) {
 			params["rating"] = rating;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 
 		function changePage(page) {
-			params["page"] = page
+			params["page"] = page;
 			run(0);
 		}
 	</script>

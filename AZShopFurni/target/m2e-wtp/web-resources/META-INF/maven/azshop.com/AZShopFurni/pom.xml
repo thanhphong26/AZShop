@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>azshop.com</groupId>
 	<artifactId>AZShopFurni</artifactId>
@@ -16,12 +14,43 @@
 		<cloud-storage-version>2.28.0</cloud-storage-version>
 	</properties>
 	<dependencies>
+		
+		
+		
+		<dependency>
+			<groupId>org.owasp</groupId>
+			<artifactId>csrfguard</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
+		<!-- Stateful web application support -->
+		<dependency>
+			<groupId>org.owasp</groupId>
+			<artifactId>csrfguard-extension-session</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
+		<!-- JSP TAG support -->
+		<dependency>
+			<groupId>org.owasp</groupId>
+			<artifactId>csrfguard-jsp-tags</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
 		<!--https://mvnrepository.com/artifact/com.google.cloud/google-cloud-storage -->
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-storage</artifactId>
 			<version>${cloud-storage-version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.12.0</version>
+		</dependency>
+
 		<!--https://mvnrepository.com/artifact/com.google.cloud.sql/mysql-socket-factory-connector-j-8 -->
 		<dependency>
 			<groupId>com.google.cloud.sql</groupId>
@@ -36,6 +65,13 @@
 			<version>${servlet.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.owasp.encoder/encoder -->
+		<dependency>
+			<groupId>org.owasp.encoder</groupId>
+			<artifactId>encoder</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
 		<!--
 		https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
 		<dependency>
@@ -79,26 +115,25 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-		
-	<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+
+		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.5</version>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.5</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.11.0</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mindrot.bcrypt/bcrypt -->
 		<dependency>
-		    <groupId>org.mindrot</groupId>
-		    <artifactId>jbcrypt</artifactId>
-		    <version>0.4</version>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
 		</dependency>
-
 
 
 	</dependencies>

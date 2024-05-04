@@ -8,7 +8,9 @@
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+<meta http-equiv="Content-Security-Policy" content=" "> 
+ 
 <!-- Style -->
 <!-- <link rel="icon" type="image/png" href="https://storage.googleapis.com/web-budget/Image/FE/website-logo.png">
  --><link rel="stylesheet" type="text/css"
@@ -26,6 +28,7 @@
 				ĐĂNG NHẬP
 				</h1>
 					<h4>${mess}</h4>
+					<input type="hidden" name="csrfToken" id="csrfToken" value="${csrfToken}" />
 					<div class="input-box">
 						<input type="text" placeholder="Tên đăng nhập" value="${username}"
 							name="username" required> <i class='bx bxs-user'></i>

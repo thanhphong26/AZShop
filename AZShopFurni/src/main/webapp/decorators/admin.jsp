@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<!doctype html>
+<html lang="en">
+<head>
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
-<link rel="icon" type="image/png" href="https://storage.googleapis.com/web-budget/Image/FE/website-logo.png">
+<link rel="icon" type="image/png"
+	href="https://storage.googleapis.com/web-budget/Image/FE/website-logo.png">
 
 <link href='<c:url value="templates/admin/css/styles.css"/>'
 	rel="stylesheet" />
@@ -167,7 +171,8 @@
 								aria-hidden="true">&times;</button>
 						</div>
 						<div class="modal-body">
-							<p>Bạn có thực sự muốn xóa những bản ghi này? Quá trình này không thể hoàn tác được.</p>
+							<p>Bạn có thực sự muốn xóa những bản ghi này? Quá trình này
+								không thể hoàn tác được.</p>
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="button" class="btn btn-secondary"

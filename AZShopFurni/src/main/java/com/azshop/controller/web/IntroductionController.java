@@ -26,6 +26,7 @@ public class IntroductionController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
 		
 		RequestDispatcher rd = req.getRequestDispatcher("/views/web/introduction.jsp");
 		rd.forward(req, resp);

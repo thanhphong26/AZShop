@@ -12,10 +12,16 @@ import java.util.stream.Collectors;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.owasp.csrfguard.CsrfGuard;
+import org.owasp.csrfguard.CsrfGuardException;
+import org.owasp.csrfguard.CsrfGuardFilter;
+import org.owasp.encoder.Encode;
 
 import com.azshop.dao.ICustomerDAO;
 import com.azshop.models.CartModel;
@@ -42,12 +48,13 @@ import com.azshop.service.impl.ProductServiceImpl;
 import com.azshop.service.impl.RatingServiceImpl;
 import com.azshop.service.impl.SearchHistoryServiceImpl;
 import com.azshop.service.impl.SupplierServiceImpl;
+import com.azshop.utils.CsrfTokenManager;
 
 @WebServlet(urlPatterns = { "/products", "/search" })
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
+	private static final int MAX_LENGTH=100;
 	IProductService productService = new ProductServiceImpl();
 	ICustomerService customerService = new CustomerServiceImpl();
 	ICategoryService categoryService = new CategoryServiceImpl();
@@ -60,13 +67,18 @@ public class ProductController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
 		resp.setContentType("text/htm");
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession();
+		
 		showHistorySearch(req, resp);
 		String url = req.getRequestURI().toString();
+	    //resp.setHeader("Content-Security-Policy", "default-src 'none'; script-src 'self'; img-src 'self' https://storage.googleapis.com; style-src 'self'; base-uri 'self'; form-action 'self'");
+		
 		if (url.contains("products")) {
-			HttpSession session = req.getSession(true);
+			
 			if (session.getAttribute("user") != null) {
 				UserModel user = (UserModel) session.getAttribute("user");
 				List<CartModel> listCart = cartService.findByCustomerId(user.getUserID());
@@ -79,9 +91,13 @@ public class ProductController extends HttpServlet {
 				getServletContext().setAttribute("carts", listCart);
 				getServletContext().setAttribute("subTotal", subTotal);
 			}
-
 			String idString = req.getParameter("id");
 			if (idString != null) {
+				 if (!isValidIdString(idString)) {
+					 RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+						rDispatcher. forward(req, resp);
+						return;
+                 }
 				int id = Integer.parseInt(req.getParameter("id"));
 				ProductModel productModel = productService.findOne(id);
 
@@ -98,6 +114,7 @@ public class ProductController extends HttpServlet {
 
 				rd = req.getRequestDispatcher("/views/web/products/productdetail.jsp");
 			} else {
+				
 				String cateIdString = req.getParameter("cateId");
 				String pageString = req.getParameter("page");
 				int page = pageString != null ? Integer.parseInt(pageString) : 1;
@@ -106,6 +123,16 @@ public class ProductController extends HttpServlet {
 				List<CategoryModel> listRootCategory = categoryService.getRootCategories();
 
 				if (cateIdString != null) {
+					 if (!isValidIdString(cateIdString)) {
+						 RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+							rDispatcher. forward(req, resp);
+							return;
+	                 }
+					 if (!isValidIdString(pageString)) {
+						 RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+							rDispatcher. forward(req, resp);
+							return;
+	                 }
 					int cateId = Integer.parseInt(cateIdString);
 					List<CategoryModel> listCateChild = categoryService.geChidlCategories(cateId);
 					CategoryModel categoryModel = categoryService.findOne(cateId);
@@ -143,9 +170,13 @@ public class ProductController extends HttpServlet {
 
 			rd.forward(req, resp);
 		} else if (url.contains("/search")) {
+			if(!doAction(req, resp)) {
+				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+				rDispatcher. forward(req, resp);
+				return;
+			}
 			List<ProductModel> listProduct = new ArrayList<ProductModel>();
 			String keyword = req.getParameter("keyword");
-			HttpSession session = req.getSession();
 			if (keyword != null) {
 				if (session != null && session.getAttribute("user") != null) {
 					UserModel user = (UserModel) session.getAttribute("user");
@@ -163,7 +194,7 @@ public class ProductController extends HttpServlet {
 			String sortProduct = req.getParameter("sort");
 			listProduct = filterAndSortProduct(listProduct, filterPrice, filterRating, sortProduct);
 
-			req.setAttribute("keyword", keyword);
+            req.setAttribute("keyword", Encode.forHtmlAttribute(keyword));
 			req.setAttribute("price", filterPrice);
 			req.setAttribute("sort", sortProduct);
 			req.setAttribute("rating", filterRating);
@@ -222,6 +253,31 @@ public class ProductController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	}
+	public boolean doAction(HttpServletRequest request, HttpServletResponse response) {
+		// get the CSRF cookie
+		String csrfCookie = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("csrf")) {
+				csrfCookie = cookie.getValue();
+			}
+		}
 
+		String csrfField = request.getParameter("csrfToken");
+
+		// validate CSRF
+		if (csrfCookie == null || csrfField == null || !csrfCookie.equals(csrfField)) {
+			return false;
+		}
+		return true;
+	}
+	private boolean isValidIdString(String idString) {
+	    if (idString == null || idString.isEmpty()) {
+	        return false;
+	    }
+	    
+	    String sanitizedIdString = Encode.forXml(idString);
+	    
+	    return sanitizedIdString.equals(idString) && idString.length() <= MAX_LENGTH;
 	}
 }
