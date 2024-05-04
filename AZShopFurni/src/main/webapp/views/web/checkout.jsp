@@ -482,13 +482,13 @@ body {
 													<h5 class="font-size-16 text-truncate">
 														<a href="#" class="text-dark">${cart.productName}</a>
 													</h5>
-													<p class="text-muted mb-0">
+													<!-- <p class="text-muted mb-0">
 														<i class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star-half text-warning"></i>
-													</p>
+													</p> -->
 													<p class="text-muted mb-0 mt-1">
 														<fmt:formatNumber type="currency"
 															value="${cart.promotionPrice}" currencyCode="VND"
