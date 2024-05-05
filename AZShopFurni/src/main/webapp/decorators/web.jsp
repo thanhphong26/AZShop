@@ -16,7 +16,7 @@
 	<c:if test="${fn:contains(pageContext.request.requestURI, 'updateAccount')}">Thay đổi mật khẩu</c:if>
 	</title>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<meta http-equiv="Content-Security-Policy" content=" "/> 
     <meta name="robots" content="NONE,NOARCHIVE">
 

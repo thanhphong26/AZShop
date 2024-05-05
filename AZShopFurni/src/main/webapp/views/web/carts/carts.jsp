@@ -45,7 +45,9 @@
 									data-toggle="tooltip" title=""
 									data-original-title="Remove item"><button class="px-3"
 										type="button" id="button-addon1" data-mdb-ripple-color="dark">
-										<i class="fas fa-minus"></i>
+										<i><img alt="sao"
+														src="<c:url value="/templates/web/images/minus.png"/>"
+														width="15" height="15"></i>
 									</button></a> <input type="text" style="flex: 0.2 1 auto;"
 									class="form-control text-center border border-secondary"
 									id="quantityInput" placeholder="${i.quantity}"
@@ -55,7 +57,9 @@
 									data-toggle="tooltip" title=""
 									data-original-title="Remove item"><button class="px-3"
 										type="button" id="button-addon1" data-mdb-ripple-color="dark">
-										<i class="fas fa-plus"></i>
+										<i><img alt="sao"
+														src="<c:url value="/templates/web/images/plus.png"/>"
+														width="15" height="15"></i>
 									</button></a>
 							</div>
 						</td>

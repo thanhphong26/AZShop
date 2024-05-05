@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
-<%@page import="com.azshop.utils.CSRF" %>
+<%@page import="com.azshop.utils.CSRF"%>
 <header>
 	<div class="container pt-5">
 		<nav class="d-flex">
@@ -49,16 +49,37 @@
 					<h3 class="title text-dark">${product.productName}</h3>
 					<div class="d-flex flex-row my-3">
 						<div class="text-warning mb-1 me-2">
-							<span class="stext-105 cl3"> <i class="fas fa-star"
-								style="${product.avgRating >= 1 ? 'color: gold;' : ''}"></i> <i
-								class="fas fa-star"
-								style="${product.avgRating >= 2 ? 'color: gold;' : ''}"></i> <i
-								class="fas fa-star"
-								style="${product.avgRating >= 3 ? 'color: gold;' : ''}"></i> <i
-								class="fas fa-star"
-								style="${product.avgRating >= 4 ? 'color: gold;' : ''}"></i> <i
-								class="fas fa-star"
-								style="${product.avgRating >= 5 ? 'color: gold;' : ''}"></i>
+							<span class="stext-105 cl3"> <c:choose>
+									<c:when test="${product.avgRating >= 1}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating >= 2}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating >= 3}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating >= 4}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating ==5}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose>
 							</span>
 						</div>
 						<span style="padding-left: 1rem;" class="text-muted"> |
@@ -122,7 +143,9 @@
 							class="mb-2">Số lượng </label>
 						<button class="px-3" type="button" id="button-addon1"
 							data-mdb-ripple-color="dark" onclick="updateQuantity(-1)">
-							<i class="fas fa-minus"></i>
+							<i><img alt="sao"
+														src="<c:url value="/templates/web/images/minus.png"/>"
+														width="15" height="15"></i>
 						</button>
 						<input type="text" style="flex: 0.2 1 auto;"
 							class="form-control text-center border border-secondary"
@@ -130,21 +153,24 @@
 							aria-describedby="button-addon1" />
 						<button class="px-3" type="button" id="button-addon2"
 							data-mdb-ripple-color="dark" onclick="updateQuantity(1)">
-							<i class="fas fa-plus"></i>
+							<i><img alt="plus"
+														src="<c:url value="/templates/web/images/plus.png"/>"
+														width="15" height="15"></i>
 						</button>
 					</div>
 					<%
 					String csrfToken = CSRF.getToken();
 
 					javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
-					cookie.setSecure(true); 
-					cookie.setHttpOnly(true); 
+					cookie.setSecure(true);
+					cookie.setHttpOnly(true);
 					response.addCookie(cookie);
 					%>
 					<div class="mt-5 row">
 						<dd class="col-5">
 							<form id="addToCartForm" action="#" method="post">
-								<input type="hidden" name="csrfToken" id ="csrfToken" value="<%= csrfToken %>"/>
+								<input type="hidden" name="csrfToken" id="csrfToken"
+									value="<%=csrfToken%>" />
 								<div>
 									<input type="hidden" name="selectedItemID" id="selectedItemID"
 										value=""> <input type="hidden" name="selectedQuantity"
@@ -192,17 +218,37 @@
 													<td>
 														<div class="text-warning mb-1 me-2"
 															style="font-size: 1.2rem;">
-															<span class="stext-105 cl3"> <i
-																class="fas fa-star"
-																style="${item.numOfStar >= 1 ? 'color: gold;' : ''}"></i>
-																<i class="fas fa-star"
-																style="${item.numOfStar >= 2 ? 'color: gold;' : ''}"></i>
-																<i class="fas fa-star"
-																style="${item.numOfStar >= 3 ? 'color: gold;' : ''}"></i>
-																<i class="fas fa-star"
-																style="${item.numOfStar >= 4 ? 'color: gold;' : ''}"></i>
-																<i class="fas fa-star"
-																style="${item.numOfStar >= 5 ? 'color: gold;' : ''}"></i>
+															<span class="stext-105 cl3"> <c:choose>
+									<c:when test="${product.avgRating > 1}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating > 2}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating > 3}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating >= 4}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose> <c:choose>
+									<c:when test="${product.avgRating ==5}">
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
+									</c:when>
+								</c:choose>
 															</span><span
 																style="font-size: 1.3rem; font-color: black; color: black; padding-left: 1.2rem; font-weight: 420;"
 																class="ms-1 star-num"> (${item.numOfRating}) </span>
@@ -290,7 +336,8 @@
 </c:if>
 <c:if test="${empty ratingList}">
 	<section class="product" style="padding-bottom: 0;">
-		<h3 class="product-category" style="font-weight:500;">Không có đánh giá về sản phẩm!</h3>
+		<h3 class="product-category" style="font-weight: 500;">Không có
+			đánh giá về sản phẩm!</h3>
 	</section>
 	<section class="product">
 		<h2 class="product-category">sản phẩm cùng nhà cung cấp</h2>

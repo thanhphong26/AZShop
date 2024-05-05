@@ -557,7 +557,9 @@ body {
 						name="CardOwner">
 					<div class="text-end mt-2 mt-sm-0 process-button">
 						<button type="submit" class="btn btn-success">
-							<i class="mdi mdi-cart-outline me-1"></i> Đặt hàng
+							<i><img alt="sao"
+														src="<c:url value="/templates/web/images/checkout.png"/>"
+														width="20" height="20"></i> Đặt hàng
 						</button>
 					</div>
 				</div>
