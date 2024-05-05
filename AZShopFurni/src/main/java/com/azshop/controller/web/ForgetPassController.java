@@ -225,6 +225,8 @@ public class ForgetPassController extends HttpServlet {
                     String formail = req.getParameter("formail");
                     if (formail != null && verification.equals(code)) {
 						if(!isSafeInput(formail)) {
+							RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+							rDispatcher. forward(req, resp);
 							return;
 						}
 						req.setAttribute("formail", formail);

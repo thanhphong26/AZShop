@@ -26,8 +26,6 @@ import com.azshop.utils.PasswordUtils;
 import other.City;
 import other.SendMail;
 
-
-
 @WebServlet(urlPatterns = { "/signup", "/verification", "/resend"})
 public class SignupController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,30 +37,23 @@ public class SignupController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-		String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
-
-		String hash = req.getQueryString();
-		if (hash != null && hash.startsWith("#")) {
-			hash = hash.substring(1); // Loại bỏ ký tự '#'
-			hash = Encode.forUriComponent(hash); // Mã hóa chuỗi hash
-		}
-		if (requestedUrl.contains("signup"))
+		String url = req.getRequestURI().toString();
+		if (url.contains("signup"))
 			showPageSignup(req, resp);
-		else if (requestedUrl.contains("verification"))
+		else if (url.contains("verification"))
 			showVerificationPage(req, resp);
-		else if (requestedUrl.contains("resend")) {
+		else if (url.contains("resend")) {
 			sendVerificationEmail(req);
-			showVerificationPage(req, resp);
-		}
+			showVerificationPage(req, resp);}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-		String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
-		if (requestedUrl.contains("signup"))
+		String url = req.getRequestURI().toString();
+		if (url.contains("signup"))
 			checkInfoSignup(req, resp);
-		else if (requestedUrl.contains("verification"))
+		else if (url.contains("verification"))
 			insertCus(req, resp);
 	}
 
@@ -101,37 +92,28 @@ public class SignupController extends HttpServlet {
 				!isSafeInput(req.getParameter(req.getParameter("passcheck")))) return;
 		
 		try {
-			String firstName = Encode.forHtml(req.getParameter("firstname"));
-            String lastName = Encode.forHtml(req.getParameter("lastname"));
-            String address = Encode.forHtml(req.getParameter("address"));
-            String gender = Encode.forHtml(req.getParameter("gender"));
-            String phone = Encode.forHtml(req.getParameter("phone"));
-            String dob = Encode.forHtml(req.getParameter("dob"));
-            String area = Encode.forHtml(req.getParameter("area"));
-            String email = Encode.forHtml(req.getParameter("email"));
-            String userName = Encode.forHtml(req.getParameter("usernamesignup"));
-            String passSignup = Encode.forHtml(req.getParameter("passsignup"));
-            String passCheck = Encode.forHtml(req.getParameter("passcheck"));
+			cusService.checkValidInfoCustomer(req.getParameter("firstname"), req.getParameter("lastname"),
+					req.getParameter("address"), req.getParameter("gender"), req.getParameter("phone"),
+					req.getParameter("dob"), req.getParameter("area"), req.getParameter("email"),
+					req.getParameter("usernamesignup"), req.getParameter("passsignup"), req.getParameter("passcheck"));
+			req.removeAttribute("exception");
 
-            cusService.checkValidInfoCustomer(firstName, lastName, address, gender, phone, dob, area, email, userName, passSignup, passCheck);
-            req.removeAttribute("exception");
-
-            UserModel user = new UserModel();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            user.setUserID(cusService.createCustomerID());
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            user.setPhone(phone);
-            user.setArea(area);
-            user.setAddress(address);
-            user.setGender(Integer.parseInt(gender));
-            user.setDob(formatter.parse(dob));
+			UserModel user = new UserModel();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			user.setUserID(cusService.createCustomerID());
+			user.setFirstName(req.getParameter("firstname"));
+			user.setLastName(req.getParameter("lastname"));
+			user.setEmail(req.getParameter("email"));
+			user.setPhone(req.getParameter("phone"));
+			user.setArea(req.getParameter("area"));
+			user.setAddress(req.getParameter("address"));
+			user.setGender(Integer.parseInt(req.getParameter("gender")));
+			user.setDob(formatter.parse(req.getParameter("dob")));
 
 			AccountModel acc = new AccountModel();
 			acc.setUserID(user.getUserID());
-	        acc.setUserName(Encode.forJavaScript(userName)); // Mã hóa dữ liệu người dùng trong biểu thức JavaScript
-			String password=pwutils.hashPassword(passSignup);
+			acc.setUserName(req.getParameter("usernamesignup"));
+			String password=pwutils.hashPassword(req.getParameter("passsignup"));
 			System.out.println(password);
 			acc.setPassword(password);
 			HttpSession session = req.getSession();
