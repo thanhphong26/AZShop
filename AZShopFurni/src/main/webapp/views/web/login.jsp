@@ -9,7 +9,12 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-<meta http-equiv="Content-Security-Policy" content=" "> 
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' https://drive.google.com https://storage.googleapis.com;
+    form-action 'self';
+">
+
  
 <!-- Style -->
 <!-- <link rel="icon" type="image/png" href="https://storage.googleapis.com/web-budget/Image/FE/website-logo.png">

@@ -213,8 +213,7 @@
 				</div>
 			</div>
 			<c:if test="${products.size()== 0 && keyword!=null}">
-				<div
-					style="display: flex; justify-content: center; align-items: center;">
+				<div class="product1">
 
 					<img alt="img"
 						src="https://storage.googleapis.com/web-budget/Image/Other/a60759ad1dabe909c46a817ecbf71878.png">

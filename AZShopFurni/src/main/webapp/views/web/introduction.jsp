@@ -1,166 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
-
-<style>
-section {
-	padding: 60px 0;
-}
-
-.width_60 {
-	width: 60%;
-}
-
-html, body {
-	font-family: 'Montserrat', sans-serif;
-	font-size: 15px;
-	letter-spacing: 0.25px;
-	line-height: 24px;
-	outline: none !important;
-	background: #ffffff;
-	color: #545454;
-}
-
-.width_100 {
-	width: 100%;
-}
-
-img {
-	vertical-align: middle;
-}
-
-.hack_ur_space .container {
-	display: flex;
-	justify-content: space-between;
-}
-
-.width_30 {
-	width: 66.66667%;
-}
-
-.container, .container-fluid, .container-lg, .container-md,
-	.container-sm, .container-xl, .container-xxl {
-	--bs-gutter-x: 1.5rem;
-	--bs-gutter-y: 0;
-	width: 100%;
-	padding-right: calc(var(--bs-gutter-x)* .5);
-	padding-left: calc(var(--bs-gutter-x)* .5);
-	margin-right: auto;
-	margin-left: auto;
-}
-
-h4 {
-	font-size: calc(1.275rem + .3vw);
-}
-
-.hack_ur_space .container p {
-	line-height: 1.5;
-	text-align: justify;
-}
-
-.container {
-	display: flex;
-}
-
-.container .text {
-	padding-right: 15px;
-}
-
-.container .img {
-	padding-left: 15px;
-}
-
-.container:before, .container:after {
-	content: " ";
-	display: table;
-}
-
-.background:before {
-	position: absolute;
-	display: block;
-	content: "";
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 10;
-}
-
-.header_background_img {
-	min-height: 300px;
-	padding: 40px;
-	margin-top: 0px;
-}
-
-.h2, h2 {
-	font-size: 45px !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'Montserrat', sans-serif;
-	line-height: auto;
-	letter-spacing: 0;
-	color: #676767;
-	margin-top: 0;
-	margin-bottom: 15px;
-}
-
-* {
-	box-sizing: border-box;
-}
-
-main {
-	display: block;
-}
-
-main {
-	margin-bottom: 0;
-	overflow: hidden;
-}
-
-.header-background-info {
-	margin-top: 150px;
-}
-
-.icon {
-	height: 130px;
-	width: 130px;
-	margin-bottom: 25px;
-}
-
-.container .column {
-	text-align: center;
-}
-
-.purpose .container p {
-	float: left;
-	text-align: center !important;
-	padding: 0 20px;
-}
-
-p {
-	display: block;
-	margin-block-start: 1em;
-	margin-block-end: 1em;
-	margin-inline-start: 0px;
-	margin-inline-end: 0px;
-}
-
-.text-center {
-	text-align: center;
-}
-
-.title-ourteam {
-	padding-bottom: 40px;
-}
-
-.purpose {
-	margin-top: 50px;
-	margin-bottom: 100px;
-</style>
-
+<head>
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' https://storage.googleapis.com https://theme.hstatic.net/1000280685/ https://file.hstatic.net/1000280685/ ; https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.5775445182644!2d106.8359462746597!3d10.843606107951775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317521c38e580d25%3A0xdd48d75138c9dae3!2sVinhomes%20Grand%20Park%20-%20Origami%20S6.03!5e0!3m2!1svi!2s!4v1702369841960!5m2!1svi!2s;
+    form-action 'self';
+">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/templates/web/css/introduction.css"/>" />
+</head>
+<body>
 <div class="wrapper main_content">
-    <div class="main_header background header_background_img" style="background-image:url(//theme.hstatic.net/1000280685/1000722794/14/about_header_bg.jpg?v=1313)">
+    <div class="main_header background header_background_img intro1">
             <div class="container header-background-info">
                 <h2 class="">Giới thiệu</h2>
             </div>
@@ -256,7 +108,9 @@ p {
                 </div>
             </div>
             
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.5775445182644!2d106.8359462746597!3d10.843606107951775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317521c38e580d25%3A0xdd48d75138c9dae3!2sVinhomes%20Grand%20Park%20-%20Origami%20S6.03!5e0!3m2!1svi!2s!4v1702369841960!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.5775445182644!2d106.8359462746597!3d10.843606107951775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317521c38e580d25%3A0xdd48d75138c9dae3!2sVinhomes%20Grand%20Park%20-%20Origami%20S6.03!5e0!3m2!1svi!2s!4v1702369841960!5m2!1svi!2s" width="600" height="450" 
+            class="intro2" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
 </div>
+</body>
