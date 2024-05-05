@@ -33,6 +33,7 @@ public class SignupController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IAccountService accService = new AccountServiceImpl();
 	ICustomerService cusService = new CustomerServiceImpl();
+	private static final int MAX_LENGTH=100;
 	PasswordUtils pwutils=new PasswordUtils();
 
 	@Override
@@ -86,6 +87,19 @@ public class SignupController extends HttpServlet {
 	private void checkInfoSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
+		
+		if(!isSafeInput(req.getParameter("firstname")) || 
+				!isSafeInput(req.getParameter("lastname")) || 
+				!isSafeInput(req.getParameter("address")) || 
+				!isSafeInput(req.getParameter("gender")) || 
+				!isSafeInput(req.getParameter("phone")) || 
+				!isSafeInput(req.getParameter("dob")) || 
+				!isSafeInput(req.getParameter("area")) || 
+				!isSafeInput(req.getParameter("email")) || 
+				!isSafeInput(req.getParameter("usernamesignup")) || 
+				!isSafeInput(req.getParameter("passsignup")) ||
+				!isSafeInput(req.getParameter(req.getParameter("passcheck")))) return;
+		
 		try {
 			String firstName = Encode.forHtml(req.getParameter("firstname"));
             String lastName = Encode.forHtml(req.getParameter("lastname"));
@@ -176,4 +190,41 @@ public class SignupController extends HttpServlet {
 		session.setAttribute("verification", verification);
 	}
 	
+	private boolean containsXsltDangerousCharacters(String input) {
+	    // Kiểm tra input có chứa các ký tự đặc biệt nguy hiểm trong ngữ cảnh XSLT
+	    // Đây chỉ là một ví dụ đơn giản, bạn cần cân nhắc sử dụng các phương pháp phức tạp hơn
+	    String[] xsltDangerousCharacters = { "<", ">", "&", "'", "\"" };
+
+	    for (String character : xsltDangerousCharacters) {
+	        if (input.contains(character)) {
+	            return true;
+	        }
+	    }
+
+	    return false;
+	}
+
+	private boolean isSafeInput(String input) {
+	    if (input == null || input.isEmpty()) {
+	        return false;
+	    }
+
+	    if (input.length() > MAX_LENGTH) {
+	        return false;
+	    }
+
+	    // Kiểm tra ký tự nguy hiểm trong ngữ cảnh DOM-based XSS
+	    String sanitizedInput = Encode.forHtml(input); // Sử dụng Encode.forHtml() hoặc Encode.forAttribute()
+
+	    if (!sanitizedInput.equals(input)) {
+	        return false;
+	    }
+
+	    // Kiểm tra ký tự nguy hiểm trong ngữ cảnh XSLT
+	    if (containsXsltDangerousCharacters(input)) {
+	        return false;
+	    }
+
+	    return true;
+	}
 }
