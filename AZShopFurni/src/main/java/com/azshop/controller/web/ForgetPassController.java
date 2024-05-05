@@ -175,17 +175,12 @@ public class ForgetPassController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IAccountService accService = new AccountServiceImpl();
     private ICustomerService cusService = new CustomerServiceImpl();
+	private static final int MAX_LENGTH=100;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-        String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
-
-        String hash = req.getQueryString();
-        if (hash != null && hash.startsWith("#")) {
-            hash = hash.substring(1); // Loại bỏ ký tự '#'
-            hash = Encode.forUriComponent(hash); // Mã hóa chuỗi hash
-        }
+        String requestedUrl = req.getRequestURI().toString();
         if (requestedUrl.contains("forgetpass")) {
         	if(!doAction(req, resp)) {
 				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
@@ -201,8 +196,7 @@ public class ForgetPassController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-
-        String requestedUrl = Encode.forUriComponent(req.getRequestURL().toString());
+        String requestedUrl = req.getRequestURI().toString();
         if (requestedUrl.contains("forgetpass")) {
         	if(!doAction(req, resp)) {
 				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
@@ -230,10 +224,15 @@ public class ForgetPassController extends HttpServlet {
                     String code = req.getParameter("code");
                     String formail = req.getParameter("formail");
                     if (formail != null && verification.equals(code)) {
-                        req.setAttribute("formail", Encode.forHtml(formail)); // Mã hóa dữ liệu trước khi sử dụng trong HTML
-                        RequestDispatcher rd = req.getRequestDispatcher("/views/web/changepass.jsp");
-                        rd.forward(req, resp);
-                    }
+						if(!isSafeInput(formail)) {
+							RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+							rDispatcher. forward(req, resp);
+							return;
+						}
+						req.setAttribute("formail", formail);
+						RequestDispatcher rd = req.getRequestDispatcher("/views/web/changepass.jsp");
+						rd.forward(req, resp);
+					}
                 }
             }
         } else {
@@ -245,23 +244,27 @@ public class ForgetPassController extends HttpServlet {
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        try {
-            cusService.checkValidEmail(req.getParameter("formail"));
-            req.removeAttribute("exception");
-            sendForgetPassEmail(req, resp, req.getParameter("formail"));
-            req.setAttribute("exception",
-                    "Vào email để lấy link đổi mật khẩu <br> Đường link chỉ tồn tại trong 5 phút");
-            req.setAttribute("formail", Encode.forHtml(req.getParameter("formail"))); // Mã hóa dữ liệu trước khi sử dụng trong HTML
-            showPageForget(req, resp);
+        String formail = req.getParameter("formail");
+		try {
+			if(!isSafeInput(formail)) {
+				return;
+			}
+			
+			cusService.checkValidEmail(formail);
+			req.removeAttribute("exception");
+			sendForgetPassEmail(req, resp, formail);
+			req.setAttribute("exception", "Vào email để lấy link đổi mật khẩu <br> Đường link chỉ tồn tại trong 5 phút");
+			req.setAttribute("formail", formail);
+			showPageForget(req, resp);
 
-        } catch (IllegalArgumentException e) {
-            req.setAttribute("exception", e.getMessage());
-            req.setAttribute("formail", Encode.forHtml(req.getParameter("formail"))); // Mã hóa dữ liệu trước khi sử dụng trong HTML
-            showPageForget(req, resp);
+		} catch (IllegalArgumentException e) {
+			req.setAttribute("exception", e.getMessage());
+			req.setAttribute("formail", formail);
+			showPageForget(req, resp);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     private void changePassCus(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -305,6 +308,44 @@ public class ForgetPassController extends HttpServlet {
 		if (csrfCookie == null || csrfField == null || !csrfCookie.equals(csrfField)) {
 			return false;
 		}
+		return true;
+	}
+    private boolean containsXsltDangerousCharacters(String input) {
+		// Kiểm tra input có chứa các ký tự đặc biệt nguy hiểm trong ngữ cảnh XSLT
+		// Đây chỉ là một ví dụ đơn giản, bạn cần cân nhắc sử dụng các phương pháp phức
+		// tạp hơn
+		String[] xsltDangerousCharacters = { "<", ">", "&", "'", "\"" };
+
+		for (String character : xsltDangerousCharacters) {
+			if (input.contains(character)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isSafeInput(String input) {
+		if (input == null || input.isEmpty()) {
+			return false;
+		}
+
+		if (input.length() > MAX_LENGTH) {
+			return false;
+		}
+
+		// Kiểm tra ký tự nguy hiểm trong ngữ cảnh DOM-based XSS
+		String sanitizedInput = Encode.forHtml(input); // Sử dụng Encode.forHtml() hoặc Encode.forAttribute()
+
+		if (!sanitizedInput.equals(input)) {
+			return false;
+		}
+
+		// Kiểm tra ký tự nguy hiểm trong ngữ cảnh XSLT
+		if (containsXsltDangerousCharacters(input)) {
+			return false;
+		}
+
 		return true;
 	}
 }
