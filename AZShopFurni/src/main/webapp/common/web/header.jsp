@@ -49,7 +49,9 @@
 					<ul class="main-menu">
 						<li><a href="<c:url value='/infoUser'/>"
 							class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-								<i class=".zmdi fa-solid fa-user fa-xl"></i>
+								<i><img alt="sao"
+														src="<c:url value="/templates/web/images/account.png"/>"
+														width="20" height="20"></i>
 						</a>
 							<ul class="sub-menu">
 								<li><a href="<c:url value='/infoUser'/>">Thông tin cá
@@ -78,7 +80,7 @@
 		<div class="container-search-header">
 			<button
 				class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-				<img src="images/icons/icon-close2.png" alt="CLOSE">
+				<img src="<c:url value="/templates/web/images/icons/icon-close2.png"/> alt="CLOSE">
 			</button>
 
 			<form class="wrap-search-header flex-w p-l-15">
@@ -91,7 +93,7 @@
 					placeholder="Search...">
 			</form>
 		</div>
-	</div>
+	</div> 
 </header>
 
 <!-- Cart -->
