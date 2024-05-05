@@ -78,20 +78,35 @@ public class SignupController extends HttpServlet {
 	private void checkInfoSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
+		System.out.println(isSafeInput(req.getParameter("dob")));
+		System.out.println(isSafeInput(req.getParameter("email")));
+		System.out.println(isSafeInput(req.getParameter("firstname")));
+		System.out.println(isSafeInput(req.getParameter("lastname")));
+		System.out.println(isSafeInput(req.getParameter("address")));
+		System.out.println(isSafeInput(req.getParameter("gender")));
+		System.out.println(isSafeInput(req.getParameter("phone")));
+		System.out.println(isSafeInput(req.getParameter("area")));
+		System.out.println(isSafeInput(req.getParameter("usernamesignup")));
+		System.out.println(isSafeInput(req.getParameter("passsignup")));
+		System.out.println(isSafeInput(req.getParameter("passsignup")));
 		
-		if(!isSafeInput(req.getParameter("firstname")) || 
-				!isSafeInput(req.getParameter("lastname")) || 
-				!isSafeInput(req.getParameter("address")) || 
-				!isSafeInput(req.getParameter("gender")) || 
-				!isSafeInput(req.getParameter("phone")) || 
-				!isSafeInput(req.getParameter("dob")) || 
-				!isSafeInput(req.getParameter("area")) || 
-				!isSafeInput(req.getParameter("email")) || 
-				!isSafeInput(req.getParameter("usernamesignup")) || 
-				!isSafeInput(req.getParameter("passsignup")) ||
-				!isSafeInput(req.getParameter(req.getParameter("passcheck")))) return;
 		
 		try {
+			if(!isSafeInput(req.getParameter("firstname")) || 
+					!isSafeInput(req.getParameter("lastname")) || 
+					!isSafeInput(req.getParameter("address")) || 
+					!isSafeInput(req.getParameter("gender")) || 
+					!isSafeInput(req.getParameter("phone")) || 
+					!isSafeInput(req.getParameter("dob")) ||
+					!isSafeInput(req.getParameter("area")) || 
+					!isSafeInput(req.getParameter("email")) ||
+					!isSafeInput(req.getParameter("usernamesignup")) || 
+					!isSafeInput(req.getParameter("passsignup")) ||
+					!isSafeInput(req.getParameter("passcheck"))) {
+				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
+				rDispatcher. forward(req, resp);
+				return;
+			}
 			cusService.checkValidInfoCustomer(req.getParameter("firstname"), req.getParameter("lastname"),
 					req.getParameter("address"), req.getParameter("gender"), req.getParameter("phone"),
 					req.getParameter("dob"), req.getParameter("area"), req.getParameter("email"),

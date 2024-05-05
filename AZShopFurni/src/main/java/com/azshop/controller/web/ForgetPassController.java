@@ -182,11 +182,6 @@ public class ForgetPassController extends HttpServlet {
         resp.setHeader("X-Frame-Options", "SAMEORIGIN");
         String requestedUrl = req.getRequestURI().toString();
         if (requestedUrl.contains("forgetpass")) {
-        	if(!doAction(req, resp)) {
-				RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
-				rDispatcher. forward(req, resp);
-				return;
-			}
             showPageForget(req, resp);
         }
         else if (requestedUrl.contains("changepass"))
@@ -224,6 +219,7 @@ public class ForgetPassController extends HttpServlet {
                     String code = req.getParameter("code");
                     String formail = req.getParameter("formail");
                     if (formail != null && verification.equals(code)) {
+                    	
 						if(!isSafeInput(formail)) {
 							RequestDispatcher rDispatcher = req.getRequestDispatcher("/views/web/404.jsp");
 							rDispatcher. forward(req, resp);
