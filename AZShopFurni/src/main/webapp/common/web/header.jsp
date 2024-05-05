@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<%@page import="com.azshop.utils.CSRF" %>
+<meta http-equiv="Content-Security-Policy" content=" "/> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <style>
 #height_reset {
@@ -62,6 +64,32 @@
 					</div>
 				</div>
 			</nav>
+		</div>
+	</div>
+	<!-- Modal Search -->
+	<%
+	String csrfToken = CSRF.getToken();
+	javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
+	cookie.setSecure(true);
+	cookie.setHttpOnly(true);
+	response.addCookie(cookie);
+	%>
+	<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+		<div class="container-search-header">
+			<button
+				class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+				<img src="images/icons/icon-close2.png" alt="CLOSE">
+			</button>
+
+			<form class="wrap-search-header flex-w p-l-15">
+				<input type="hidden" name="csrfToken" value="<%=csrfToken%>" />
+
+				<button class="flex-c-m trans-04">
+					<i class="zmdi zmdi-search"></i>
+				</button>
+				<input class="plh3" type="text" name="search"
+					placeholder="Search...">
+			</form>
 		</div>
 	</div>
 </header>
