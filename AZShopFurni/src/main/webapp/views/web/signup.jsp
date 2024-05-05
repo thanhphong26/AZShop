@@ -20,9 +20,6 @@
 <!-- Style -->
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/templates/web/css/login.css"/>">
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
-	rel='stylesheet'>
-
 
 <title>Đăng ký</title>
 </head>

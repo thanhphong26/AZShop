@@ -3,13 +3,12 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
-<%@page import="com.azshop.utils.CSRF" %>
+<%@page import="com.azshop.utils.CSRF"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link href='<c:url value="/templates/web/css/product.css"/>'
+<link href='<c:url value="/templates/web/css/products/product.css"/>'
 	rel="stylesheet" />
-	
 </head>
 
 <body>
@@ -54,13 +53,13 @@
 				String csrfToken = CSRF.getToken();
 
 				javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
-				cookie.setSecure(true); 
-				cookie.setHttpOnly(true); 
+				cookie.setSecure(true);
+				cookie.setHttpOnly(true);
 				response.addCookie(cookie);
 				%>
 				<form class="dis-none panel-search w-full p-t-10 p-b-15"
 					action="${pageContext.request.contextPath}/search" method="get">
-					  <input type="hidden" name="csrfToken" value="<%= csrfToken %>"/>
+					<input type="hidden" name="csrfToken" value="<%=csrfToken%>" />
 					<div class="bor8 dis-flex p-l-15">
 						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
 							<i class="zmdi zmdi-search"></i>
@@ -131,47 +130,81 @@
 								<li class="p-b-6">
 									<button onclick="changeRating('5')"
 										class="filter-link stext-106 trans-04 ${rating == '5' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i>
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('4')"
 										class="filter-link stext-106 trans-04 ${rating == '4' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> trở lên
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('3')"
 										class="filter-link stext-106 trans-04 ${rating == '3' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> trở lên
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('2')"
 										class="filter-link stext-106 trans-04 ${rating == '2' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i>trở lên
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('1')"
 										class="filter-link stext-106 trans-04 ${rating == '1' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> trở lên
 									</button>
 								</li>
 							</ul>
@@ -245,16 +278,38 @@
 												value="${item.displayedOriginalPrice}" currencyCode="VND"
 												pattern="#,##0 VND" var="formattedPrice" />
 											${formattedPrice}
-										</span> <span class="stext-105 cl3"> <i class="fas fa-star"
-											style="${item.avgRating >= 1 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 2 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 3 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 4 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 5 ? 'color: gold;' : ''}"></i>
+
+										</span> <span class="stext-105 cl3"> <c:choose>
+												<c:when test="${item.avgRating >= 1}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating >= 2}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating >= 3}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating >= 4}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating ==5}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> 
 										</span>
 									</div>
 								</div>

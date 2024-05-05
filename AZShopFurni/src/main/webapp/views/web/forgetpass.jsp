@@ -16,8 +16,8 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/templates/web/vendor/bootstrap/css/bootstrap.min.css"/>">
 <!-- Style -->
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
-	rel='stylesheet'>
+<%-- <link href="<c:url value="/templates/web/css/infor/boxicons.min.css"/>"
+	rel='stylesheet'> --%>
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/templates/web/css/login.css"/>">
 
