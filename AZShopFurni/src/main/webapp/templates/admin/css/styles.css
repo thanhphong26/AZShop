@@ -8274,6 +8274,11 @@ textarea.form-control-lg {
 .rounded-4 {
   border-radius: var(--bs-border-radius-xl) !important;
 }
+.detail2 {
+	max-width: 100%;
+	max-height: 100vh;
+	margin: auto;
+}
 
 .rounded-5 {
   border-radius: var(--bs-border-radius-2xl) !important;

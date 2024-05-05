@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <style>
 #height_reset {
 	height: 0;
