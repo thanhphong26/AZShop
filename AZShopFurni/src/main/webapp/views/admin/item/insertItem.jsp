@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>InsertItem</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<%-- <link rel="stylesheet"
+	href="<c:url value="/templates/web/css/infor/all.min.css"/>"> --%>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <link

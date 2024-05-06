@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+
 <!-- Footer -->
 <footer class="bg2 p-t-50 p-b-25">
+
 	<div class="container" style="flex-direction: column; display: flex;">
 		<div class="row">
 
 			<div class="col-sm-6 col-lg-3 p-b-10">
-				<a href="<c:url value='/home'/>"> <img alt="Logo-web"
-					style="width: 200px"
-					src="https://drive.google.com/file/d/1DPn4srTQ9dgsTd5xH2h_5KlgLAZ8qxkT/view?usp=sharing">
+				<a href="<c:url value='/home'/>"> <img class="logo-img"
+					alt="Logo-web"
+					src="https://storage.googleapis.com/web-budget1/Image/logo.png">
 				</a>
 			</div>
 

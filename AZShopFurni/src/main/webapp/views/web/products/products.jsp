@@ -1,15 +1,18 @@
+<%@page import="com.azshop.utils.CSRF"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
+<%@page import="com.azshop.utils.CSRF"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link href='<c:url value="/templates/web/css/product.css"/>'
+<link href='<c:url value="/templates/web/css/products/product.css"/>'
 	rel="stylesheet" />
 </head>
 
 <body>
+
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-130">
 		<div class="container">
@@ -46,24 +49,32 @@
 					</div>
 				</div>
 				<!-- Search product -->
+				<%
+				String csrfToken = CSRF.getToken();
+
+				javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
+				cookie.setSecure(true);
+				cookie.setHttpOnly(true);
+				response.addCookie(cookie);
+				%>
 				<form class="dis-none panel-search w-full p-t-10 p-b-15"
 					action="${pageContext.request.contextPath}/search" method="get">
-					<div class="dis-none panel-search w-full p-t-10 p-b-15">
-						<div class="bor8 dis-flex p-l-15">
-							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-							<datalist id="listHistory">
-								<c:forEach var="i" items="${history}">
-									<option value="${i.history}">
-								</c:forEach>
-							</datalist>
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
-								list="listHistory" name="keyword"
-								placeholder="<c:if test="{keyword==null}">Tìm kiếm</c:if>${keyword}">
-						</div>
+					<input type="hidden" name="csrfToken" value="<%=csrfToken%>" />
+					<div class="bor8 dis-flex p-l-15">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04 ">
+							<i class="zmdi zmdi-search"></i>
+						</button>
+						<datalist id="listHistory">
+							<c:forEach var="i" items="${history}">
+								<option value="${i.history}">
+							</c:forEach>
+						</datalist>
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
+							list="listHistory" name="keyword"
+							placeholder="<c:if test="{keyword==null}">Tìm kiếm</c:if>${keyword}">
 					</div>
 				</form>
+
 				<!-- Filter -->
 				<div class="dis-none panel-filter w-full p-t-10">
 					<div
@@ -91,7 +102,8 @@
 							<div class="mtext-102 cl2 p-b-15">Khoảng giá</div>
 							<ul>
 								<li class="p-b-6"><button onclick=" changPrice('')"
-										class="filter-link stext-106 trans-04 ${price == '' ? 'filter-link-active' : ''}">Tất cả</button></li>
+										class="filter-link stext-106 trans-04 ${price == '' ? 'filter-link-active' : ''}">Tất
+										cả</button></li>
 								<li class="p-b-6"><button
 										onclick=" changPrice('0-1000000')"
 										class="filter-link stext-106 trans-04 ${price == '0-1000000' ? 'filter-link-active' : ''}">Dưới
@@ -118,47 +130,81 @@
 								<li class="p-b-6">
 									<button onclick="changeRating('5')"
 										class="filter-link stext-106 trans-04 ${rating == '5' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i>
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i>
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('4')"
 										class="filter-link stext-106 trans-04 ${rating == '4' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> trở lên
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('3')"
 										class="filter-link stext-106 trans-04 ${rating == '3' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> trở lên
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('2')"
 										class="filter-link stext-106 trans-04 ${rating == '2' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i>trở lên
 									</button>
 								</li>
 								<li class="p-b-6">
 									<button onclick="changeRating('1')"
 										class="filter-link stext-106 trans-04 ${rating == '1' ? 'filter-link-active' : ''}">
-										<i class="fas fa-star" style="color: gold;"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i><i
-											class="fa fa-star"></i><i class="fa fa-star"></i> trở lên
+										<i><img alt="sao"
+											src="<c:url value="/templates/web/images/star.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> <i><img alt="sao"
+											src="<c:url value="/templates/web/images/star1.png"/>"
+											width="15" height="15"></i> trở lên
 									</button>
 								</li>
 							</ul>
@@ -167,8 +213,7 @@
 				</div>
 			</div>
 			<c:if test="${products.size()== 0 && keyword!=null}">
-				<div
-					style="display: flex; justify-content: center; align-items: center;">
+				<div class="product1">
 
 					<img alt="img"
 						src="https://storage.googleapis.com/web-budget/Image/Other/a60759ad1dabe909c46a817ecbf71878.png">
@@ -232,16 +277,38 @@
 												value="${item.displayedOriginalPrice}" currencyCode="VND"
 												pattern="#,##0 VND" var="formattedPrice" />
 											${formattedPrice}
-										</span> <span class="stext-105 cl3"> <i class="fas fa-star"
-											style="${item.avgRating >= 1 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 2 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 3 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 4 ? 'color: gold;' : ''}"></i> <i
-											class="fas fa-star"
-											style="${item.avgRating >= 5 ? 'color: gold;' : ''}"></i>
+
+										</span> <span class="stext-105 cl3"> <c:choose>
+												<c:when test="${item.avgRating >= 1}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating >= 2}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating >= 3}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating >= 4}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> <c:choose>
+												<c:when test="${item.avgRating ==5}">
+													<i><img alt="sao"
+														src="<c:url value="/templates/web/images/star.png"/>"
+														width="15" height="15"></i>
+												</c:when>
+											</c:choose> 
 										</span>
 									</div>
 								</div>
@@ -269,42 +336,41 @@
 			sort : "${sort}",
 			price : "${price}",
 			rating : "${rating}",
-			page : "${page}",
+			page : "${page}"
 		};
 		function run() {
-			var url = "?"
-					+ Object.keys(params).map(
-							function(key) {
-								if (params[key] !== null
-										&& params[key] !== undefined
-										&& params[key] !== "") {
-									return encodeURIComponent(key) + '='
-											+ encodeURIComponent(params[key]);
-								}
-							}).filter(Boolean).join('&');
-
+			var urlParams = new URLSearchParams();
+			for ( var key in params) {
+				if (params.hasOwnProperty(key)) {
+					var value = params[key];
+					if (value !== null && value !== undefined && value !== "") {
+						urlParams.append(key, value);
+					}
+				}
+			}
+			var url = "?" + urlParams.toString();
 			window.location.href = url;
 		}
 
 		function changPrice(price) {
 			params["price"] = price;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 
 		function changSort(sort) {
 			params["sort"] = sort;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 		function changeRating(rating) {
 			params["rating"] = rating;
-			params["page"] = 1
+			params["page"] = 1;
 			run(0);
 		}
 
 		function changePage(page) {
-			params["page"] = page
+			params["page"] = page;
 			run(0);
 		}
 	</script>

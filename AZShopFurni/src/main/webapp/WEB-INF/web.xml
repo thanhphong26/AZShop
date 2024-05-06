@@ -8,7 +8,7 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-
+	
 	<!-- Filter configuration (if needed) -->
 	<filter>
 		<filter-name>sitemesh</filter-name>

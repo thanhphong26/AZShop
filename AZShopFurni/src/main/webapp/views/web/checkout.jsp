@@ -11,6 +11,7 @@
 <head>
 <title>checkout</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content=" "> 
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
@@ -481,13 +482,13 @@ body {
 													<h5 class="font-size-16 text-truncate">
 														<a href="#" class="text-dark">${cart.productName}</a>
 													</h5>
-													<p class="text-muted mb-0">
+													<!-- <p class="text-muted mb-0">
 														<i class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star text-warning"></i> <i
 															class="bx bxs-star-half text-warning"></i>
-													</p>
+													</p> -->
 													<p class="text-muted mb-0 mt-1">
 														<fmt:formatNumber type="currency"
 															value="${cart.promotionPrice}" currencyCode="VND"
@@ -556,7 +557,9 @@ body {
 						name="CardOwner">
 					<div class="text-end mt-2 mt-sm-0 process-button">
 						<button type="submit" class="btn btn-success">
-							<i class="mdi mdi-cart-outline me-1"></i> Đặt hàng
+							<i><img alt="sao"
+														src="<c:url value="/templates/web/images/checkout.png"/>"
+														width="20" height="20"></i> Đặt hàng
 						</button>
 					</div>
 				</div>

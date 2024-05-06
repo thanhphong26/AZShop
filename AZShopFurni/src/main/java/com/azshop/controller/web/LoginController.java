@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import com.azshop.models.UserModel;
 import com.azshop.service.IAccountService;
 import com.azshop.service.ICustomerService;
@@ -21,24 +23,27 @@ import com.azshop.service.impl.CustomerServiceImpl;
 @WebServlet(urlPatterns = { "/login", "/waiting", "/logout" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final int MAX_LENGTH=100;
 	IAccountService accService = new AccountServiceImpl();
 	ICustomerService cusService = new CustomerServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String url = req.getRequestURI().toString();
-		if (url.contains("login"))
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
+		String requestedUrl = req.getRequestURI().toString();
+		if (requestedUrl.contains("login"))
 			showPageLogin(req, resp);
-		else if (url.contains("waiting"))
+		else if (requestedUrl.contains("waiting"))
 			waiting(req, resp);
-		else if (url.contains("logout"))
+		else if (requestedUrl.contains("logout"))
 			logout(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String url = req.getRequestURI().toString();
-		if (url.contains("login"))
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
+	    String requestedUrl = req.getRequestURI().toString();
+		if (requestedUrl.contains("login"))
 			checkLogin(req, resp);
 	}
 
@@ -70,7 +75,7 @@ public class LoginController extends HttpServlet {
 		resp.setContentType("text/html");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-
+		if(!isSafeInput(username) || !isSafeInput(password)) return;
 
 		UserModel user = accService.login(username, password);
 		if (user == null) {
@@ -128,6 +133,44 @@ public class LoginController extends HttpServlet {
 		cookie.setMaxAge(30 * 62);
 		resp.addCookie(cookie);
 
+	}
+	
+	private boolean containsXsltDangerousCharacters(String input) {
+	    // Kiểm tra input có chứa các ký tự đặc biệt nguy hiểm trong ngữ cảnh XSLT
+	    // Đây chỉ là một ví dụ đơn giản, bạn cần cân nhắc sử dụng các phương pháp phức tạp hơn
+	    String[] xsltDangerousCharacters = { "<", ">", "&", "'", "\"" };
+
+	    for (String character : xsltDangerousCharacters) {
+	        if (input.contains(character)) {
+	            return true;
+	        }
+	    }
+
+	    return false;
+	}
+
+	private boolean isSafeInput(String input) {
+	    if (input == null || input.isEmpty()) {
+	        return false;
+	    }
+
+	    if (input.length() > MAX_LENGTH) {
+	        return false;
+	    }
+
+	    // Kiểm tra ký tự nguy hiểm trong ngữ cảnh DOM-based XSS
+	    String sanitizedInput = Encode.forHtml(input); // Sử dụng Encode.forHtml() hoặc Encode.forAttribute()
+
+	    if (!sanitizedInput.equals(input)) {
+	        return false;
+	    }
+
+	    // Kiểm tra ký tự nguy hiểm trong ngữ cảnh XSLT
+	    if (containsXsltDangerousCharacters(input)) {
+	        return false;
+	    }
+
+	    return true;
 	}
 }
 

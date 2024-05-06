@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import org.owasp.encoder.Encode;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -54,14 +55,15 @@ public class PersonalInformationController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		String url = req.getRequestURI().toString();
-		if (url.contains("updateUser")) {
+	    String requestedUrl = Encode.forHtml(req.getRequestURL().toString());
+		//String url = req.getRequestURI().toString();
+		if (requestedUrl.contains("updateUser")) {
 			createUserModel(req, resp);
 			resp.sendRedirect("infoUser");
-		} else if (url.contains("updateAccount")) {
+		} else if (requestedUrl.contains("updateAccount")) {
 			createAccountModel(req, resp);
 			updateInfAccount(req,resp);
-		} else if (url.contains("updateAvatar")) {
+		} else if (requestedUrl.contains("updateAvatar")) {
 			updateAvatar(req, resp);
 			resp.sendRedirect("infoUser");
 		}
@@ -96,12 +98,12 @@ public class PersonalInformationController extends HttpServlet {
 
 	private void createUserModel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int userID = Integer.parseInt(req.getParameter("UserID"));
-		String firstName = req.getParameter("FirstName");
-		String lastName = req.getParameter("LastName");
-		String address = req.getParameter("Address");
-		int gender = Integer.parseInt(req.getParameter("Gender"));
-		String phone = req.getParameter("Phone");
-		String dobString = req.getParameter("Dob");
+		String firstName = Encode.forHtml(req.getParameter("FirstName"));
+        String lastName = Encode.forHtml(req.getParameter("LastName"));
+        String address = Encode.forHtml(req.getParameter("Address"));
+        int gender = Integer.parseInt(req.getParameter("Gender"));
+        String phone = Encode.forHtml(req.getParameter("Phone"));
+        String dobString = Encode.forHtml(req.getParameter("Dob"));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date dob = null;
 		try {
@@ -109,12 +111,19 @@ public class PersonalInformationController extends HttpServlet {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		String cid = req.getParameter("Cid");
-		int type = Integer.parseInt(req.getParameter("Type"));
-		String email = req.getParameter("Email");
-		int kpi = Integer.parseInt(req.getParameter("KPI"));
-		String area = req.getParameter("Area");
-		String avatar = req.getParameter("image");
+		/*
+		 * String cid = req.getParameter("Cid"); int type =
+		 * Integer.parseInt(req.getParameter("Type")); String email =
+		 * req.getParameter("Email"); int kpi =
+		 * Integer.parseInt(req.getParameter("KPI")); String area =
+		 * req.getParameter("Area"); String avatar = req.getParameter("image");
+		 */
+		String cid = Encode.forHtml(req.getParameter("Cid"));
+        int type = Integer.parseInt(req.getParameter("Type"));
+        String email = Encode.forHtml(req.getParameter("Email"));
+        int kpi = Integer.parseInt(req.getParameter("KPI"));
+        String area = Encode.forHtml(req.getParameter("Area"));
+        String avatar = Encode.forHtml(req.getParameter("image"));
 
 		UserModel user = new UserModel();
 		user.setUserID(userID);
@@ -130,7 +139,11 @@ public class PersonalInformationController extends HttpServlet {
 		user.setKpi(kpi);
 		user.setArea(area);
 		user.setEmail(email);
-
+		if (!isValidInput(user)) {
+            // Handle invalid input
+            resp.sendRedirect("infoUser");
+            return;
+        }
 		userService.updateUser(user);
 		HttpSession session = req.getSession(true);
 		session.setAttribute("user",userService.getInfoUser(userID));
@@ -164,5 +177,30 @@ public class PersonalInformationController extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		session.setAttribute("user",userService.getInfoUser(userID));
 		getInfUser(req, resp);
+	}
+	private boolean isValidInput(UserModel user) {
+	    // Validate user input here
+	    // Return true if input is valid, false otherwise
+
+	    // Example validation: Check if the first name and last name are not empty
+	    String firstName = user.getFirstName().trim();
+	    String lastName = user.getLastName().trim();
+	    if (firstName.isEmpty() || lastName.isEmpty()) {
+	        return false;
+	    }
+
+	    // Validate email format
+	    String email = user.getEmail().trim();
+	    if (!email.isEmpty()) {
+	        // Use a regular expression to validate the email format
+	        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+	        if (!email.matches(emailRegex)) {
+	            return false;
+	        }
+	    }
+
+	    // Add more validation logic here based on your requirements
+
+	    return true; // Input is valid
 	}
 }

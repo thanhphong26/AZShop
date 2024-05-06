@@ -8,13 +8,21 @@
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' https://drive.google.com https://storage.googleapis.com;
+    form-action 'self';
+">
+
+ 
 <!-- Style -->
 <!-- <link rel="icon" type="image/png" href="https://storage.googleapis.com/web-budget/Image/FE/website-logo.png">
  --><link rel="stylesheet" type="text/css"
 	href="<c:url value="/templates/web/css/login.css"/>">
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
-	rel='stylesheet'>
+<%-- <link type="text/css"
+href="<c:url value="/templates/web/css/infor/boxicons.min.css"/>"
+	rel='stylesheet'/> --%>
 
 <title>Đăng nhập</title>
 </head>
@@ -26,6 +34,7 @@
 				ĐĂNG NHẬP
 				</h1>
 					<h4>${mess}</h4>
+					<input type="hidden" name="csrfToken" id="csrfToken" value="${csrfToken}" />
 					<div class="input-box">
 						<input type="text" placeholder="Tên đăng nhập" value="${username}"
 							name="username" required> <i class='bx bxs-user'></i>
