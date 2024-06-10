@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>org.owasp</groupId>
 			<artifactId>csrfguard</artifactId>
-			<version>4.3.0</version>
+			<version>4.3.0-jakarta</version>
 		</dependency>
 
 		<!-- Stateful web application support -->
