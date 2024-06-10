@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>org.owasp</groupId>
 			<artifactId>csrfguard-extension-session</artifactId>
-			<version>4.3.0</version>
+			<version>4.3.0-jakarta</version>
 		</dependency>
 
 		<!-- JSP TAG support -->
