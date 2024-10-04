@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>org.owasp</groupId>
 			<artifactId>csrfguard</artifactId>
-			<version>4.3.0</version>
+			<version>4.4.0</version>
 		</dependency>
 
 		<!-- Stateful web application support -->
@@ -127,7 +127,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.11.0</version>
+			<version>2.14.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mindrot.bcrypt/bcrypt -->
 		<dependency>
